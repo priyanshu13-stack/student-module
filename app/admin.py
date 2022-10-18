@@ -4,4 +4,5 @@ from .models import sample
 
 @admin.register(sample)
 class sampleAdmin(ImportExportModelAdmin):
-    list_display = ('name', 'email', 'location')
+    list_display = ('enrollmentno', 'name', 'stream','Fname', 'Mname', 'dob', 'gender', 'category', 'subcategory', 'region' , 'allottedquota', 'allottedcategory', 'emailid', 'address', 'pcm')
+

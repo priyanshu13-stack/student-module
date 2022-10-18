@@ -61,15 +61,45 @@
     <br>
     <table border="2" style="border:1px solid black;margin-left:auto;margin-right:auto;">
         <thead>
+            <th>Enrollment Number</th>
             <th>Name</th>
-            <th>Email</th>
-            <th>Location</th>
+            <th>Stream</th>
+            <th>Appno</th>
+            <th>First Name</th>
+            <th>Middle Name</th>
+            <th>DOB</th>
+            <th>Gender</th>
+            <th>Category</th>
+            <th>SubCategory</th>
+            <th>Region</th>
+            <th>Region</th>
+            <th>Rank</th>
+            <th>Allotted Quota</th>
+            <th>Allotted Category</th>
+            <th>Institute</th>
+            <th>Email ID</th>
+            <th>Address</th>
+            <th>PCM</th>
         </thead>
         {% for k in smp  %}
         <tr>
+            <td>{{k.enrollmentno}}</td>
             <td>{{k.name}}</td>
-            <td>{{k.email}}</td>
-            <td>{{k.location}}</td>
+            <td>{{k.stream}}</td>
+            <td>{{k.appno}}</td>
+            <td>{{k.Fname}}</td>
+            <td>{{k.Mname}}</td>
+            <td>{{k.dob}}</td>
+            <td>{{k.gender}}</td>
+            <td>{{k.category}}</td>
+            <td>{{k.subcategory}}</td>
+            <td>{{k.region}}</td>
+            <td>{{k.allottedquota}}</td>
+            <td>{{k.allottedcategory}}</td>
+            <td>{{k.institute}}</td>
+            <td>{{k.emailid}}</td>
+            <td>{{k.address}}</td>
+            <td>{{k.pcm}}</td>
         </tr>
         {% endfor %}
 
