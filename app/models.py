@@ -13,7 +13,7 @@ class sample(models.Model):
     category = models.CharField(max_length=5, default=False)
     subcategory = models.CharField(max_length=10, default=False)
     region = models.CharField(max_length=50, default=False)
-    rank = models.CharField(default=False, max_length=200)
+    rank = models.IntegerField(null = True, default=None , blank=True)
     allottedquota = models.CharField(max_length=10, default=False)
     allottedcategory = models.CharField(max_length=10, default=False)
     institute = models.CharField(max_length=200, default=False)
