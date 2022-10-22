@@ -9,6 +9,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
   </head>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
 
     <style>
         html,body {
@@ -28,29 +29,24 @@
     <div style="position:relative; left:40px">
         <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-        <label>Browse</label>
         <input type="file" name="myfile">
         <br><br>
         <button type="submit" class="btn btn-primary">Upload File</button>
     </form>
     </div>
     {% endif %}
-
     <style>
-
     table {
       font-family: Consolas;
       font-size:11px;
       border-collapse: collapse;
       width: 66%;
     }
-
     td, th {
       border: 1px solid black;
       text-align: center;
       padding: 8px;
     }
-
     tr:nth-child(even) {
       background-color: #dddddd;
     }
@@ -58,66 +54,91 @@
     </head>
     <body>
     <br>
-    <div style="position: relative; left:45px;">
-        <a href="{% url 'app:upload' %}" class="btn btn-outline-primary btn-sm">All Data</a>&nbsp;&nbsp;
-        <a href="{% url 'app:sort' %}" class="btn btn-outline-primary btn-sm">Sort by Rank</a>&nbsp;&nbsp;
-        <a href="" class="btn btn-outline-primary btn-sm">Quota</a>&nbsp;&nbsp;
-        <a href="" class="btn btn-outline-primary btn-sm">Gender</a>&nbsp;&nbsp;
-        <a href="" class="btn btn-outline-primary btn-sm">Branch</a>&nbsp;&nbsp;
-    </div>
+    {% if smp %}
+        <div style="position: relative; left:45px;">
+            <div>
+            <div class="nav-item dropdown">
+                <a href="{% url 'app:upload' %}" class="btn btn-outline-primary btn-sm">All Data</a>&nbsp;&nbsp;
+                <a href="{% url 'app:sort' %}" class="btn btn-outline-primary btn-sm">Sort by Rank</a>&nbsp;&nbsp;
+            <a class="btn btn-outline-primary btn-sm" class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Quota
+            </a>
 
-    <br>
-    <h4 style="text-align: center; ">Data Retrieved</h4>
-    <br>
-    <table border="1" style="border:2px solid black;margin-left:auto;margin-right:auto;">
-        <thead>
-            <th>Enrollment Number</th>
-            <th>Name</th>
-            <th>Branch</th>
-            <th>Appno</th>
-            <th>Year of Admission</th>
-            <th>First Name</th>
-            <th>Middle Name</th>
-            <th>DOB</th>
-            <th>Gender</th>
-            <th>Category</th>
-            <th>SubCategory</th>
-            <th>Region</th>
-            <th>Rank</th>
-            <th>Allotted Quota</th>
-            <th>Allotted Category</th>
-            <th>Institute</th>
-            <th>Email ID</th>
-            <th>Address</th>
-            <th>PCM</th>
-        </thead>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  {% for x in my %}
+                <li><a class="dropdown-item" href="#">{{x}}</a></li>
+                <li><a class="dropdown-item" href="#">Caste1</a></li>
+                <li><a class="dropdown-item" href="#">Caste1</a></li>
+                <li><a class="dropdown-item" href="#">Caste1</a></li>
+                  {% endfor %}
+              </ul>&nbsp;
 
-        {% for k in smp  %}
-        <tr>
-            <td>{{k.enrollmentno}}</td>
-            <td>{{k.name}}</td>
-            <td>{{k.branch}}</td>
-            <td>{{k.appno}}</td>
-            <td>{{k.yearofadmission}}</td>
-            <td>{{k.Fname}}</td>
-            <td>{{k.Mname}}</td>
-            <td>{{k.DOB}}</td>
-            <td>{{k.gender}}</td>
-            <td>{{k.category}}</td>
-            <td>{{k.subcategory}}</td>
-            <td>{{k.region}}</td>
-            <td>{{k.rank}}</td>
-            <td>{{k.allottedquota}}</td>
-            <td>{{k.allottedcategory}}</td>
-            <td>{{k.institute}}</td>
-            <td>{{k.emailid}}</td>
-            <td>{{k.address}}</td>
-            <td>{{k.pcm}}</td>
-        </tr>
-        {% endfor %}
+            <a href="" class="btn btn-outline-primary btn-sm">Gender</a>&nbsp;&nbsp;
+            <a href="" class="btn btn-outline-primary btn-sm">Branch</a>&nbsp;&nbsp;
+            </div>
 
 
+            </div>
+
+        </div>
+
+</div>
+
+
+
+
+        <br>
+        <h4 style="text-align: center; ">Data Retrieved</h4>
+        <br>
+        <table border="1" style="border:2px solid black;margin-left:auto;margin-right:auto;">
+            <thead>
+                <th>Enrollment Number</th>
+                <th>Name</th>
+                <th>Branch</th>
+                <th>Appno</th>
+                <th>Year of Admission</th>
+                <th>Father Name</th>
+                <th>Mother Name</th>
+                <th>DOB</th>
+                <th>Gender</th>
+                <th>Category</th>
+                <th>SubCategory</th>
+                <th>Region</th>
+                <th>Rank</th>
+                <th>Allotted Quota</th>
+                <th>Allotted Category</th>
+                <th>Institute</th>
+                <th>Email ID</th>
+                <th>Address</th>
+                <th>PCM</th>
+            </thead>
+            {% for k in smp  %}
+            <tr>
+                <td>{{k.enrollmentno}}</td>
+                <td>{{k.name}}</td>
+                <td>{{k.branch}}</td>
+                <td>{{k.appno}}</td>
+                <td>{{k.yearofadmission}}</td>
+                <td>{{k.Fname}}</td>
+                <td>{{k.Mname}}</td>
+                <td>{{k.DOB}}</td>
+                <td>{{k.gender}}</td>
+                <td>{{k.category}}</td>
+                <td>{{k.subcategory}}</td>
+                <td>{{k.region}}</td>
+                <td>{{k.rank}}</td>
+                <td>{{k.allottedquota}}</td>
+                <td>{{k.allottedcategory}}</td>
+                <td>{{k.institute}}</td>
+                <td>{{k.emailid}}</td>
+                <td>{{k.address}}</td>
+                <td>{{k.pcm}}</td>
+            </tr>
+            {% endfor %}
+    {% else %}
+            <br><br><br><br>
+            <h4 style="text-align:center; font-family:Consolas">Please upload a file to get started!</h4>
+    {% endif %}
     </table>
   </body>
 </html>
-

@@ -42,3 +42,11 @@ def sort(request):
     }
     return HttpResponse(templ.render(context,request))
 
+def quota(request):
+    my = sample.objects.values_list('category')
+    templ = loader.get_template('app/home.html')
+    context = {
+        'my': my,
+    }
+    return HttpResponse(templ.render(context, request))
+
