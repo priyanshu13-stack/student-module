@@ -31,7 +31,6 @@ def upload(request):
     context = {
         "smp" : smp,
     }
-
     return render(request, 'app/home.html', context)
 
 def sort(request):
@@ -42,11 +41,110 @@ def sort(request):
     }
     return HttpResponse(templ.render(context,request))
 
-def quota(request):
-    my = sample.objects.values_list('category')
-    templ = loader.get_template('app/home.html')
-    context = {
-        'my': my,
-    }
-    return HttpResponse(templ.render(context, request))
+def quota_gn(request):
+    smp = sample.objects.filter(category = 'GN').values()
+    if not smp:
+        return HttpResponse('No records found')
+    else:
+        templ = loader.get_template('app/home.html')
+        context = {
+            'smp': smp,
+        }
+        return HttpResponse(templ.render(context, request))
+
+def quota_obc(request):
+    smp = sample.objects.filter(category = 'OBC').values()
+    if not smp:
+        return HttpResponse('No records found')
+    else:
+        templ = loader.get_template('app/home.html')
+        context = {
+            'smp': smp,
+        }
+        return HttpResponse(templ.render(context, request))
+
+def quota_sc(request):
+    smp = sample.objects.filter(category = 'SC').values()
+    if not smp:
+        return HttpResponse('No records found')
+    else:
+        templ = loader.get_template('app/home.html')
+        context = {
+            'smp': smp,
+        }
+        return HttpResponse(templ.render(context, request))
+
+def quota_st(request):
+    smp = sample.objects.filter(category = 'ST').values()
+    if not smp:
+        return HttpResponse('No records found')
+    else:
+        templ = loader.get_template('app/home.html')
+        context = {
+            'smp': smp,
+        }
+        return HttpResponse(templ.render(context, request))
+
+def gender_m(request):
+    smp = sample.objects.filter(gender = 'Male').values()
+    if not smp:
+        return HttpResponse('No records found')
+    else:
+        templ = loader.get_template('app/home.html')
+        context = {
+            'smp': smp,
+        }
+        return HttpResponse(templ.render(context, request))
+
+def gender_f(request):
+    smp = sample.objects.filter(gender = 'Female').values()
+    if not smp:
+        return HttpResponse('No records found')
+    else:
+        templ = loader.get_template('app/home.html')
+        context = {
+            'smp': smp,
+        }
+        return HttpResponse(templ.render(context, request))
+
+def branch_cse(request):
+    smp = sample.objects.filter(branch = 'CSE').values()
+    if not smp:
+        return HttpResponse('No records found')
+    else:
+        templ = loader.get_template('app/home.html')
+        context = {
+            'smp': smp,
+        }
+        return HttpResponse(templ.render(context, request))
+def branch_it(request):
+    smp = sample.objects.filter(branch = 'IT').values()
+    if not smp:
+        return HttpResponse('No records found')
+    else:
+        templ = loader.get_template('app/home.html')
+        context = {
+            'smp': smp,
+        }
+        return HttpResponse(templ.render(context, request))
+def branch_ece(request):
+    smp = sample.objects.filter(branch = 'ECE').values()
+    if not smp:
+        return HttpResponse('No records found')
+    else:
+        templ = loader.get_template('app/home.html')
+        context = {
+            'smp': smp,
+        }
+        return HttpResponse(templ.render(context, request))
+def branch_eee(request):
+    smp = sample.objects.filter(branch = 'EEE').values()
+    if not smp:
+        return HttpResponse('No records found')
+    else:
+        templ = loader.get_template('app/home.html')
+        context = {
+            'smp': smp,
+        }
+        return HttpResponse(templ.render(context, request))
 

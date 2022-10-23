@@ -56,32 +56,40 @@
     <br>
     {% if smp %}
         <div style="position: relative; left:45px;">
-            <div>
             <div class="nav-item dropdown">
                 <a href="{% url 'app:upload' %}" class="btn btn-outline-primary btn-sm">All Data</a>&nbsp;&nbsp;
                 <a href="{% url 'app:sort' %}" class="btn btn-outline-primary btn-sm">Sort by Rank</a>&nbsp;&nbsp;
             <a class="btn btn-outline-primary btn-sm" class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Quota
             </a>
-
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  {% for x in my %}
-                <li><a class="dropdown-item" href="#">{{x}}</a></li>
-                <li><a class="dropdown-item" href="#">Caste1</a></li>
-                <li><a class="dropdown-item" href="#">Caste1</a></li>
-                <li><a class="dropdown-item" href="#">Caste1</a></li>
-                  {% endfor %}
+                    <li><a class="dropdown-item" href="{% url 'app:quota_gn' %}">General</a></li>
+                    <li><a class="dropdown-item" href="{% url 'app:quota_obc' %}">OBC</a></li>
+                    <li><a class="dropdown-item" href="{% url 'app:quota_sc' %}">SC</a></li>
+                    <li><a class="dropdown-item" href="{% url 'app:quota_st' %}">ST</a></li>
               </ul>&nbsp;
 
-            <a href="" class="btn btn-outline-primary btn-sm">Gender</a>&nbsp;&nbsp;
-            <a href="" class="btn btn-outline-primary btn-sm">Branch</a>&nbsp;&nbsp;
-            </div>
+                <a class="btn btn-outline-primary btn-sm" class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Gender
+            </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="{% url 'app:gender_m' %}">Male</a></li>
+                    <li><a class="dropdown-item" href="{% url 'app:gender_f' %}">Female</a></li>
+              </ul>&nbsp;
 
+                <a class="btn btn-outline-primary btn-sm" class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Branch
+            </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="{% url 'app:branch_cse' %}">CSE</a></li>
+                    <li><a class="dropdown-item" href="{% url 'app:branch_it' %}">IT</a></li>
+                    <li><a class="dropdown-item" href="{% url 'app:branch_ece' %}">ECE</a></li>
+                    <li><a class="dropdown-item" href="{% url 'app:branch_eee' %}">EEE</a></li>
+              </ul>&nbsp;
 
             </div>
 
         </div>
-
 </div>
 
 
