@@ -5,7 +5,7 @@ from django.contrib import messages
 from tablib import Dataset
 from django.http import HttpResponse
 from django.template import loader
-
+import xlwt
 
 def home(request):
     return render(request, "app/home.html")
@@ -32,6 +32,45 @@ def upload(request):
         "smp" : smp,
     }
     return render(request, 'app/home.html', context)
+
+def download(request):
+    # sampleresource = sampleResource()
+    # # smp = sample.objects.filter(category='SC').values()
+    # dataset = sampleresource.export()
+    # response = HttpResponse(dataset.xlsx, content_type='application/vnd.ms-excel')
+    # response['Content-Disposition'] = 'attachment; filename="data.xlsx"'
+    # return response
+    response = HttpResponse(content_type='application/ms-excel')
+    response['Content-Disposition'] = 'attachment; filename="data.xls"'
+
+    wb = xlwt.Workbook(encoding='utf-8')
+    ws = wb.add_sheet('Data')  # this will make a sheet named Users Data
+
+    # Sheet header, first row
+    row_num = 0
+
+    font_style = xlwt.XFStyle()
+    font_style.font.bold = True
+
+    columns = ['enrollmentno', 'name', 'branch','Fname', 'Mname', 'DOB', 'gender', 'category', 'subcategory', 'region',
+                    'rank','allottedquota', 'allottedcategory', 'emailid', 'address', 'pcm', ]
+
+    for col_num in range(len(columns)):
+        ws.write(row_num, col_num, columns[col_num], font_style)  # at 0 row 0 column
+
+    # Sheet body, remaining rows
+    font_style = xlwt.XFStyle()
+
+    smp = sample.objects.all().values_list('enrollmentno', 'name', 'branch','Fname', 'Mname', 'DOB', 'gender', 'category', 'subcategory', 'region',
+                    'rank','allottedquota', 'allottedcategory', 'emailid', 'address', 'pcm')
+    for row in smp:
+        row_num += 1
+        for col_num in range(len(row)):
+            ws.write(row_num, col_num, row[col_num], font_style)
+
+    wb.save(response)
+
+    return response
 
 def sort(request):
     smp = sample.objects.order_by('rank')
@@ -147,4 +186,3 @@ def branch_eee(request):
             'smp': smp,
         }
         return HttpResponse(templ.render(context, request))
-

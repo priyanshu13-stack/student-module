@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.urls import path
 from .import views
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.upload, name = "upload"),
@@ -16,4 +17,5 @@ urlpatterns = [
     path('branch_it', views.branch_it, name = "branch_it"),
     path('branch_ece', views.branch_ece, name = "branch_ece"),
     path('branch_eee', views.branch_eee, name = "branch_eee"),
+    path(r'^download/$', views.download, name = "download"),
 ]
