@@ -1,6 +1,7 @@
 from django.db import models
 
 class sample(models.Model):
+    sno = models.IntegerField(null = False, default=None, blank= False)
     enrollmentno = models.IntegerField(null = True, default=None , blank=True)
     name = models.CharField(max_length=100, default=False)
     branch = models.CharField(max_length=200, default=False)

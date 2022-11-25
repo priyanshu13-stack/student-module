@@ -26,7 +26,7 @@ def upload(request):
         for i in imported_data:
             value = sample(
                 i[0],i[1],i[2],i[3],i[4],i[5],i[6],i[7],i[8],i[9],i[10],i[11],i[12],i[13],i[14],i[15],i[16],
-                i[17],i[18],i[19],
+                i[17],i[18],i[19],i[20],
             )
             value.save()
     context = {
@@ -42,13 +42,13 @@ def download(request):
     row_num = 0
     font_style = xlwt.XFStyle()
     font_style.font.bold = True
-    columns = ['enrollmentno', 'name', 'branch','Fname', 'Mname', 'DOB', 'gender', 'category', 'subcategory', 'region',
+    columns = ['sno','enrollmentno', 'name', 'branch','Fname', 'Mname', 'DOB', 'gender', 'category', 'subcategory', 'region',
                     'rank','allottedquota', 'allottedcategory', 'emailid', 'address', 'pcm', ]
     for col_num in range(len(columns)):
         ws.write(row_num, col_num, columns[col_num], font_style)
 
     font_style = xlwt.XFStyle()
-    smp = sample.objects.all().values_list('enrollmentno', 'name', 'branch','Fname', 'Mname', 'DOB', 'gender', 'category', 'subcategory', 'region',
+    smp = sample.objects.all().values_list('sno','enrollmentno', 'name', 'branch','Fname', 'Mname', 'DOB', 'gender', 'category', 'subcategory', 'region',
                     'rank','allottedquota', 'allottedcategory', 'emailid', 'address', 'pcm')
     for row in smp:
         row_num += 1
