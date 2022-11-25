@@ -6,6 +6,8 @@ from .import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.upload, name = "upload"),
+    path('update/<str:pk>/', views.update, name='update'),
+    path('delete/<str:pk>/', views.delete, name='delete'),
     path('sort', views.sort, name = "sort"),
     path('quota_gn', views.quota_gn, name = "quota_gn"),
     path('quota_obc', views.quota_obc, name = "quota_obc"),

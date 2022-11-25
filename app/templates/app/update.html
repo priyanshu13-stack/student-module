@@ -1,0 +1,13 @@
+{% block content %}
+    <h2 class="text center" style="margin-left: 60px;">
+        Update Products
+    </h2>
+    <div class="container m-5">
+        <form action="" method = "post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{form.as_p}}
+            <input type="submit" name = "Submit" class="btn btn-primary m-1">
+        </form>
+    </div>
+
+{% endblock %}

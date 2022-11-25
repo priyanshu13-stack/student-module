@@ -6,6 +6,7 @@ from tablib import Dataset
 from django.http import HttpResponse
 from django.template import loader
 import xlwt
+from .forms import sampleform
 
 def home(request):
     return render(request, "app/home.html")
@@ -171,3 +172,25 @@ def branch_eee(request):
             'smp': smp,
         }
         return HttpResponse(templ.render(context, request))
+
+def update(request,pk):
+    order = sample.objects.get(id = pk)
+    form = sampleform(instance= order)
+    if request.method == "POST":
+        form = sampleform(request.POST, instance= order)
+        if form.is_valid():
+            form.save()
+            return redirect('/')
+
+    context = {
+        "form" : form,
+    }
+    return render(request, 'app/update.html', context)
+
+def delete(request, pk):
+    order = sample.objects.get(id = pk)
+    if request.method == "POST":
+        order.delete()
+        return redirect('/')
+    context = {'item': order,}
+    return render(request, 'app/delete.html', context)

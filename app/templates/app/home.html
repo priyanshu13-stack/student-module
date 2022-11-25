@@ -37,15 +37,15 @@
     {% endif %}
     <style>
     table {
-      font-family: Consolas;
-      font-size:11px;
+      font-family: Calibri;
+      font-size:12px;
       border-collapse: collapse;
       width: 66%;
     }
     td, th {
       border: 1px solid black;
-      text-align: center;
-      padding: 8px;
+      text-align: Center;
+      padding: 7px;
     }
     tr:nth-child(even) {
       background-color: #dddddd;
@@ -119,6 +119,8 @@
                 <th>Email ID</th>
                 <th>Address</th>
                 <th>PCM</th>
+                <th>Actions</th>
+
             </thead>
             {% for k in smp  %}
             <tr>
@@ -141,6 +143,10 @@
                 <td>{{k.emailid}}</td>
                 <td>{{k.address}}</td>
                 <td>{{k.pcm}}</td>
+                <td><a class="btn btn-primary btn-sm" href="{% url 'app:update' k.id %}">Update</a>
+                <a class="btn btn-danger btn-sm" href="{% url 'app:delete' k.id %}">Delete</a>
+                </td>
+
             </tr>
             {% endfor %}
             <a href="{% url 'app:download' %}" class="btn btn-primary" style="position:relative; left:45px; top:-20px;">Download File</a>
