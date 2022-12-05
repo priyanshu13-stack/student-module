@@ -12,7 +12,7 @@ def home(request):
     return render(request, "app/home.html")
 
 def upload(request):
-    smp = sample.objects.all()
+    smp = sample.objects.all().distinct()
     if request.method == "POST":
         sample_resource = sampleResource()
         dataset = Dataset()

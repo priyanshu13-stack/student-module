@@ -6,7 +6,7 @@ class sample(models.Model):
     name = models.CharField(max_length=100, default=False)
     branch = models.CharField(max_length=200, default=False)
     appno = models.CharField(default=False , max_length=200)
-    yearofadmission = models.DateField(default= False)
+    yearofadmission = models.DateTimeField(default= False)
     Fname = models.CharField(max_length=200, default=False)
     Mname = models.CharField(max_length=200, default=False)
     DOB = models.DateField(default=False)
@@ -24,3 +24,8 @@ class sample(models.Model):
 
     def __str__(self):
         return self.name
+    def yearpub(self):
+        return self.yearofadmission.strftime('%Y')
+
+    def dateofbirth(self):
+        return self.DOB.strftime('%d-%m-%Y')
