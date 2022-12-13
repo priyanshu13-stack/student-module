@@ -12,7 +12,8 @@ def home(request):
     return render(request, "app/home.html")
 
 def upload(request):
-    smp = sample.objects.all().distinct()
+    # smp = sample.objects.order_by().values('name').distinct()
+    smp = sample.objects.all()
     if request.method == "POST":
         sample_resource = sampleResource()
         dataset = Dataset()
@@ -26,7 +27,7 @@ def upload(request):
         for i in imported_data:
             value = sample(
                 i[0],i[1],i[2],i[3],i[4],i[5],i[6],i[7],i[8],i[9],i[10],i[11],i[12],i[13],i[14],i[15],i[16],
-                i[17],i[18],i[19],i[20],
+                i[17],i[18],i[19],i[20],i[21],i[22],i[23],
             )
             value.save()
     context = {
