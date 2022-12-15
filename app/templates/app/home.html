@@ -172,7 +172,9 @@
             </thead>
             {% for k in smp  %}
             <tr>
-                <td>{{k.sno}}</td>
+                <td class="number">
+
+                </td>
                 <td>{{k.type}}</td>
                 <td>{{k.enrollmentno}}</td>
                 <td>{{k.name}}</td>
@@ -209,7 +211,15 @@
     {% endif %}
     </table>
     <br>
-
+        <script>
+            var i = 1;
+            document.querySelectorAll(".number").forEach(number => {
+            number.innerHTML = `${i}`;
+            i+=1;
+        });
+        </script>
   </body>
-<br><br><br><br>
+<br><br>
+
+
 </html>
