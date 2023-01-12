@@ -10,6 +10,7 @@ class sampleform(forms.ModelForm):
         fields = '__all__'
         widgets = {
             'type': forms.Select(attrs={'class': 'form-control'}),
+            'admitted': forms.TextInput(attrs={'class': 'form-control'}),
             'enrollmentno': forms.TextInput(attrs={'class': 'form-control'}),
             'name': forms.TextInput(attrs={'class': 'form-control'}),
             'stream': forms.Select(attrs={'class': 'form-control'}),

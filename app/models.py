@@ -57,6 +57,7 @@ streamchoices = (
 )
 class sample(models.Model):
     type = models.CharField(max_length=10, choices= typechoices ,default='Regular')
+    admitted = models.BooleanField(default=False)
     enrollmentno = models.IntegerField(null = True, default=None , blank=True)
     name = models.CharField(max_length=100, default=False)
     management = models.BooleanField(default = False)
@@ -74,7 +75,7 @@ class sample(models.Model):
     allottedquota = models.CharField(max_length=10,choices= allotedquotachoices, default=False)
     allottedcategory = models.CharField(max_length=10,choices= allottedcategorychoices, default=False)
     studentmobile = models.IntegerField(null = True, default=None , blank=True)
-    emailid = models.EmailField(max_length=20, default=False)
+    emailid = models.EmailField(max_length=20, default='')
     fathermobile = models.IntegerField(null = True, default=None , blank=True)
     address = models.CharField(max_length=200, default=False)
     aggregate = models.FloatField(null = True, default=None , blank=True)
@@ -88,3 +89,14 @@ class sample(models.Model):
     def dateofbirth(self):
         return self.DOB.strftime('%d-%m-%Y')
 
+    def admitted_yn(self):
+        if (self.admitted == True):
+            return "YES"
+        else:
+            return "NO"
+
+    def management_yn(self):
+        if (self.management == True):
+            return "YES"
+        else:
+            return "NO"
