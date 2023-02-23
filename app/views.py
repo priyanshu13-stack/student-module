@@ -8,20 +8,16 @@ from django.template import loader
 import xlwt
 from .forms import sampleform
 
-def home(request):
-    return render(request, "app/home.html")
-
 def upload(request):
-    # smp = sample.objects.order_by().values('name').distinct()
     smp = sample.objects.all()
-    if request.method == "POST":
+    if (request.method == "POST"):
         sample_resource = sampleResource()
         dataset = Dataset()
         new_file = request.FILES['myfile']
 
         if not new_file.name.endswith('xlsx'):
             messages.info(request, 'File format not supported')
-            return render(request, 'app/home.html')
+            return render(request, 'app/upload.html')
 
         imported_data = dataset.load(new_file.read(),format='xlsx')
         for i in imported_data:
@@ -30,6 +26,15 @@ def upload(request):
                 i[17],i[18],i[19],i[20],i[21],i[22],i[23],i[24],
             )
             value.save()
+        return redirect('app:home')
+    
+    context = {
+        "smp" : smp,
+    }
+    return render(request, "app/upload.html", context)
+
+def home(request):
+    smp = sample.objects.all()
     context = {
         "smp" : smp,
     }
