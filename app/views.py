@@ -40,6 +40,30 @@ def home(request):
     }
     return render(request, 'app/home.html', context)
 
+def filter(request):
+    if (request.method == "POST"):
+        gender = request.POST.get('gender')
+        occupation = request.POST.get('occupation')
+        smp = sample.objects.filter(category = gender).values()
+
+        return render(request, "app/home.html", {"smp" : smp})
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 def download(request):
     response = HttpResponse(content_type='application/ms-excel')
     response['Content-Disposition'] = 'attachment; filename="data.xls"'
@@ -50,7 +74,7 @@ def download(request):
     font_style.font.bold = True
     columns = ['sno','enrollmentno', 'name', 'branch','Fname', 'Mname', 'DOB', 'gender', 'category', 'subcategory', 'region',
                     'rank','allottedquota', 'allottedcategory', 'emailid', 'address', 'pcm', ]
-    for col_num in range(len(columns)):
+    for col_num in range(len(columns)): 
         ws.write(row_num, col_num, columns[col_num], font_style)
 
     font_style = xlwt.XFStyle()

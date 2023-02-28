@@ -79,7 +79,8 @@
     </head>
     <body>
     <br>
-    {% if smp %}
+<!--     
+    <h3 style="position: relative; left: 2.6%; ">Preferences</h3>
         <div style="position: relative; left:45px;">
             <div class="nav-item dropdown">
                 <a href="{% url 'app:home' %}" class="btn btn-outline-primary btn-sm">All Data</a>&nbsp;&nbsp;
@@ -115,8 +116,32 @@
             </div>
 
         </div>
-</div>
+</div> -->
+    <hr/>
+    <form method="post">
+        {% csrf_token %}
+        <input type="radio" value="Male" name="gender"> Male
+        <input type="radio" value="Female" name="gender"> Female
 
+        <select name="Occupation" id="">
+            <option selected disabled = true> Select Occupation</option>
+            <option value="">Sales</option>
+            <option value="">HR</option>
+            <option value="">Programmer</option>
+        </select>
+        <input type="Submit" value="Search">
+    </form>
+    <hr/>
+
+
+
+
+
+
+
+
+
+      {% if smp %}
         <br>
         <h4 style="text-align: center; ">Data Retrieved</h4>
         <br>
@@ -201,6 +226,4 @@
         </script>
   </body>
 <br><br>
-
-
 </html>
