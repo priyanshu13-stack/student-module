@@ -87,8 +87,6 @@ def filter(request):
 
                 elif (cat == 'AICTE'):
                     smp = sample.objects.filter(category = 'AICTE')
-            else:
-                return HttpResponse("No records found")
 
 
             if is_valid_query(gen):
@@ -137,12 +135,10 @@ def filter(request):
                     smp = sample.objects.filter(type = 'Management')
 
     context = {
-        "smp" : smp,
+        "smp" : smp    
     }
 
-    return render(request, "app/home.html", context)
-
-    
+    return render(request, "app/home.html", context)  
 
 
 
