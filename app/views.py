@@ -301,8 +301,8 @@ def update(request,pk):
         form = sampleform(request.POST, instance= order)
         if form.is_valid():
             form.save()
-            return redirect('/')
-
+            return redirect('app:filter')
+        
     context = {
         "form" : form,
     }
