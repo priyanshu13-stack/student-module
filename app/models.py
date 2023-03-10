@@ -75,7 +75,7 @@ class sample(models.Model):
     allottedquota = models.CharField(max_length=10,choices= allotedquotachoices, default=False)
     allottedcategory = models.CharField(max_length=10,choices= allottedcategorychoices, default=False)
     studentmobile = models.IntegerField(null = True, default=None , blank=True)
-    emailid = models.EmailField(max_length=20, default='')
+    emailid = models.EmailField(max_length=200, default='')
     fathermobile = models.IntegerField(null = True, default=None , blank=True)
     address = models.CharField(max_length=200, default=False)
     aggregate = models.FloatField(null = True, default=None , blank=True)

@@ -10,26 +10,23 @@ from .forms import sampleform
 
 def upload(request):
     smp = sample.objects.all()
-    if (smp.count() > 0):
-        return redirect('app:home')
-    else:
-        if (request.method == "POST"):
-            sample_resource = sampleResource()
-            dataset = Dataset()
-            new_file = request.FILES['myfile']
+    if (request.method == "POST"):
+        sample_resource = sampleResource()
+        dataset = Dataset()
+        new_file = request.FILES['myfile']
 
-            if not new_file.name.endswith('xlsx'):
-                messages.info(request, 'File format not supported')
-                return render(request, 'app/upload.html')
+        if not new_file.name.endswith('xlsx'):
+            messages.info(request, 'File format not supported')
+            return render(request, 'app/upload.html')
 
-            imported_data = dataset.load(new_file.read(),format='xlsx')
-            for i in imported_data:
-                value = sample(
-                    i[0],i[1],i[2],i[3],i[4],i[5],i[6],i[7],i[8],i[9],i[10],i[11],i[12],i[13],i[14],i[15],i[16],
-                    i[17],i[18],i[19],i[20],i[21],i[22],i[23],i[24],
-                )
-                value.save()
-            return redirect('app:filter')
+        imported_data = dataset.load(new_file.read(),format='xlsx')
+        for i in imported_data:
+            value = sample(
+                i[0],i[1],i[2],i[3],i[4],i[5],i[6],i[7],i[8],i[9],i[10],i[11],i[12],i[13],i[14],i[15],i[16],
+                i[17],i[18],i[19],i[20],i[21],i[22],i[23],i[24],
+            )
+            value.save()
+        return redirect('app:filter')
     
     context = {
         "smp" : smp,
@@ -51,88 +48,85 @@ def is_valid_query(param):
 
 def filter(request):
     smp = sample.objects.all()
-    if (smp.count() < 0):
-        return redirect('app:home')
-    else:
-        if request.method == "POST":
-            srt = request.POST.get('sort')
-            cat = request.POST.get('category')
-            gen = request.POST.get('gender')
-            br = request.POST.get('branch')
-            re = request.POST.get('region')
-            ty = request.POST.get('type')
+    if request.method == "POST":
+        srt = request.POST.get('sort')
+        cat = request.POST.get('category')
+        gen = request.POST.get('gender')
+        br = request.POST.get('branch')
+        re = request.POST.get('region')
+        ty = request.POST.get('type')
 
-            if is_valid_query(srt):
-                if (srt == 'Increasing Order'):
-                    smp = sample.objects.order_by('rank')
+        if is_valid_query(srt):
+            if (srt == 'Increasing Order'):
+                smp = sample.objects.order_by('rank')
 
-                elif (srt == 'Decreasing Order'):
-                    smp = sample.objects.order_by('-rank')
+            elif (srt == 'Decreasing Order'):
+                smp = sample.objects.order_by('-rank')
 
-            if is_valid_query(cat):
-                if (cat == 'General'):
-                    smp = sample.objects.filter(category = 'GN')
+        if is_valid_query(cat):
+            if (cat == 'General'):
+                smp = sample.objects.filter(category = 'GN')
 
-                elif (cat == 'OBC'):
-                    smp = sample.objects.filter(category = 'OBC')
+            elif (cat == 'OBC'):
+                smp = sample.objects.filter(category = 'OBC')
 
-                elif (cat == 'SC'):
-                    smp = sample.objects.filter(category = 'SC')
+            elif (cat == 'SC'):
+                smp = sample.objects.filter(category = 'SC')
 
-                elif (cat == 'ST'):
-                    smp = sample.objects.filter(category = 'ST')
+            elif (cat == 'ST'):
+                smp = sample.objects.filter(category = 'ST')
 
-                elif (cat == 'EWS'):
-                    smp = sample.objects.filter(category = 'EWS')
+            elif (cat == 'EWS'):
+                smp = sample.objects.filter(category = 'EWS')
 
-                elif (cat == 'AICTE'):
-                    smp = sample.objects.filter(category = 'AICTE')
+            elif (cat == 'AICTE'):
+                smp = sample.objects.filter(category = 'AICTE')
 
 
-            if is_valid_query(gen):
-                if (gen == 'Male'):
-                    smp = sample.objects.filter(gender = 'Male')
-                
-                elif (gen == 'Female'):
-                    smp = sample.objects.filter(gender = 'Female')
+        if is_valid_query(gen):
+            if (gen == 'Male'):
+                smp = sample.objects.filter(gender = 'Male')
+            
+            elif (gen == 'Female'):
+                smp = sample.objects.filter(gender = 'Female')
 
-                elif (gen == 'Other'):
-                    smp = sample.objects.filter(gender = 'Other')
-
-
-            if is_valid_query(br):
-                if (br == 'CSE'):
-                    smp = sample.objects.filter(stream = 'CSE')
-                
-                elif (br == 'IT'):
-                    smp = sample.objects.filter(stream = 'IT')
-                
-                elif (br == 'ECE'):
-                    smp = sample.objects.filter(stream = 'ECE')
-
-                elif (br == 'EEE'):
-                    smp = sample.objects.filter(stream = 'EEE')
+            elif (gen == 'Other'):
+                smp = sample.objects.filter(gender = 'Other')
 
 
-            if is_valid_query(re):
-                if (re == 'Outside Delhi'):
-                    smp = sample.objects.filter(region = 'OutsideDelhi')
+        if is_valid_query(br):
+            if (br == 'CSE'):
+                smp = sample.objects.filter(stream = 'CSE')
+            
+            elif (br == 'IT'):
+                smp = sample.objects.filter(stream = 'IT')
+            
+            elif (br == 'ECE'):
+                smp = sample.objects.filter(stream = 'ECE')
 
-                elif (re == 'Delhi'):
-                    smp = sample.objects.filter(region = 'Delhi')
-                
-            if is_valid_query(ty):
-                if (ty == 'Regular'):
-                    smp = sample.objects.filter(type = 'Regular')
-                
-                elif (ty == 'Upgraded Student'):
-                    smp = sample.objects.filter(type = 'Upgrade')
+            elif (br == 'EEE'):
+                smp = sample.objects.filter(stream = 'EEE')
 
-                elif (ty == 'Lateral Entry'):
-                    smp = sample.objects.filter(type = 'LE')
-                
-                elif (ty == 'Management'):
-                    smp = sample.objects.filter(type = 'Management')
+
+        if is_valid_query(re):
+            if (re == 'Outside Delhi'):
+                smp = sample.objects.filter(region = 'OutsideDelhi')
+
+            elif (re == 'Delhi'):
+                smp = sample.objects.filter(region = 'Delhi')
+            
+        if is_valid_query(ty):
+            if (ty == 'Regular'):
+                smp = sample.objects.filter(type = 'Regular')
+            
+            elif (ty == 'Upgraded Student'):
+                smp = sample.objects.filter(type = 'Upgrade')
+
+            elif (ty == 'Lateral Entry'):
+                smp = sample.objects.filter(type = 'LE')
+            
+            elif (ty == 'Management'):
+                smp = sample.objects.filter(type = 'Management')
 
     context = {
         "smp" : smp    
@@ -301,8 +295,8 @@ def update(request,pk):
         form = sampleform(request.POST, instance= order)
         if form.is_valid():
             form.save()
-            return redirect('/')
-
+            return redirect('app:filter')
+        
     context = {
         "form" : form,
     }
@@ -320,5 +314,7 @@ def delete(request, pk):
 def delete_all(request):
     s = sample.objects.all()
     s.delete()
+    return redirect('app:upload')
 
+def upload_new(request):
     return redirect('app:upload')
