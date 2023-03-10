@@ -48,88 +48,88 @@ def is_valid_query(param):
 
 def filter(request):
     smp = sample.objects.all()
-    # if (smp.count() < 0):
-    #     return render(request, 'app/upload.html')
-    # else:
-    if request.method == "POST":
-        srt = request.POST.get('sort')
-        cat = request.POST.get('category')
-        gen = request.POST.get('gender')
-        br = request.POST.get('branch')
-        re = request.POST.get('region')
-        ty = request.POST.get('type')
+    if (smp.count() < 0):
+        return redirect('app:upload')
+    else:
+        if request.method == "POST":
+            srt = request.POST.get('sort')
+            cat = request.POST.get('category')
+            gen = request.POST.get('gender')
+            br = request.POST.get('branch')
+            re = request.POST.get('region')
+            ty = request.POST.get('type')
 
-        if is_valid_query(srt):
-            if (srt == 'Increasing Order'):
-                smp = sample.objects.order_by('rank')
+            if is_valid_query(srt):
+                if (srt == 'Increasing Order'):
+                    smp = sample.objects.order_by('rank')
 
-            elif (srt == 'Decreasing Order'):
-                smp = sample.objects.order_by('-rank')
+                elif (srt == 'Decreasing Order'):
+                    smp = sample.objects.order_by('-rank')
 
-        if is_valid_query(cat):
-            if (cat == 'General'):
-                smp = sample.objects.filter(category = 'GN')
+            if is_valid_query(cat):
+                if (cat == 'General'):
+                    smp = sample.objects.filter(category = 'GN')
 
-            elif (cat == 'OBC'):
-                smp = sample.objects.filter(category = 'OBC')
+                elif (cat == 'OBC'):
+                    smp = sample.objects.filter(category = 'OBC')
 
-            elif (cat == 'SC'):
-                smp = sample.objects.filter(category = 'SC')
+                elif (cat == 'SC'):
+                    smp = sample.objects.filter(category = 'SC')
 
-            elif (cat == 'ST'):
-                smp = sample.objects.filter(category = 'ST')
+                elif (cat == 'ST'):
+                    smp = sample.objects.filter(category = 'ST')
 
-            elif (cat == 'EWS'):
-                smp = sample.objects.filter(category = 'EWS')
+                elif (cat == 'EWS'):
+                    smp = sample.objects.filter(category = 'EWS')
 
-            elif (cat == 'AICTE'):
-                smp = sample.objects.filter(category = 'AICTE')
-
-
-        if is_valid_query(gen):
-            if (gen == 'Male'):
-                smp = sample.objects.filter(gender = 'MALE')
-            
-            elif (gen == 'Female'):
-                smp = sample.objects.filter(gender = 'FEMALE')
-
-            elif (gen == 'Other'):
-                smp = sample.objects.filter(gender = 'OTHER')
+                elif (cat == 'AICTE'):
+                    smp = sample.objects.filter(category = 'AICTE')
 
 
-        if is_valid_query(br):
-            if (br == 'CSE'):
-                smp = sample.objects.filter(stream = 'CSE')
-            
-            elif (br == 'IT'):
-                smp = sample.objects.filter(stream = 'IT')
-            
-            elif (br == 'ECE'):
-                smp = sample.objects.filter(stream = 'ECE')
+            if is_valid_query(gen):
+                if (gen == 'Male'):
+                    smp = sample.objects.filter(gender = 'MALE')
+                
+                elif (gen == 'Female'):
+                    smp = sample.objects.filter(gender = 'FEMALE')
 
-            elif (br == 'EEE'):
-                smp = sample.objects.filter(stream = 'EEE')
+                elif (gen == 'Other'):
+                    smp = sample.objects.filter(gender = 'OTHER')
 
 
-        if is_valid_query(re):
-            if (re == 'Outside Delhi'):
-                smp = sample.objects.filter(region = 'OUTSIDE DELHI')
+            if is_valid_query(br):
+                if (br == 'CSE'):
+                    smp = sample.objects.filter(stream = 'CSE')
+                
+                elif (br == 'IT'):
+                    smp = sample.objects.filter(stream = 'IT')
+                
+                elif (br == 'ECE'):
+                    smp = sample.objects.filter(stream = 'ECE')
 
-            elif (re == 'Delhi'):
-                smp = sample.objects.filter(region = 'DELHI')
-            
-        if is_valid_query(ty):
-            if (ty == 'Regular'):
-                smp = sample.objects.filter(type = 'REGULAR')
-            
-            elif (ty == 'Upgraded Student'):
-                smp = sample.objects.filter(type = 'UPGRADE')
+                elif (br == 'EEE'):
+                    smp = sample.objects.filter(stream = 'EEE')
 
-            elif (ty == 'Lateral Entry'):
-                smp = sample.objects.filter(type = 'LE')
-            
-            elif (ty == 'Management'):
-                smp = sample.objects.filter(type = 'MANAGEMENT')
+
+            if is_valid_query(re):
+                if (re == 'Outside Delhi'):
+                    smp = sample.objects.filter(region = 'OUTSIDE DELHI')
+
+                elif (re == 'Delhi'):
+                    smp = sample.objects.filter(region = 'DELHI')
+                
+            if is_valid_query(ty):
+                if (ty == 'Regular'):
+                    smp = sample.objects.filter(type = 'REGULAR')
+                
+                elif (ty == 'Upgraded Student'):
+                    smp = sample.objects.filter(type = 'UPGRADE')
+
+                elif (ty == 'Lateral Entry'):
+                    smp = sample.objects.filter(type = 'LE')
+                
+                elif (ty == 'Management'):
+                    smp = sample.objects.filter(type = 'MANAGEMENT')
 
     context = {
         "smp" : smp    
