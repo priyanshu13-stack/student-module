@@ -48,6 +48,9 @@ def is_valid_query(param):
 
 def filter(request):
     smp = sample.objects.all()
+    # if (smp.count() < 0):
+    #     return render(request, 'app/upload.html')
+    # else:
     if request.method == "POST":
         srt = request.POST.get('sort')
         cat = request.POST.get('category')
@@ -85,13 +88,13 @@ def filter(request):
 
         if is_valid_query(gen):
             if (gen == 'Male'):
-                smp = sample.objects.filter(gender = 'Male')
+                smp = sample.objects.filter(gender = 'MALE')
             
             elif (gen == 'Female'):
-                smp = sample.objects.filter(gender = 'Female')
+                smp = sample.objects.filter(gender = 'FEMALE')
 
             elif (gen == 'Other'):
-                smp = sample.objects.filter(gender = 'Other')
+                smp = sample.objects.filter(gender = 'OTHER')
 
 
         if is_valid_query(br):
@@ -110,23 +113,23 @@ def filter(request):
 
         if is_valid_query(re):
             if (re == 'Outside Delhi'):
-                smp = sample.objects.filter(region = 'OutsideDelhi')
+                smp = sample.objects.filter(region = 'OUTSIDE DELHI')
 
             elif (re == 'Delhi'):
-                smp = sample.objects.filter(region = 'Delhi')
+                smp = sample.objects.filter(region = 'DELHI')
             
         if is_valid_query(ty):
             if (ty == 'Regular'):
-                smp = sample.objects.filter(type = 'Regular')
+                smp = sample.objects.filter(type = 'REGULAR')
             
             elif (ty == 'Upgraded Student'):
-                smp = sample.objects.filter(type = 'Upgrade')
+                smp = sample.objects.filter(type = 'UPGRADE')
 
             elif (ty == 'Lateral Entry'):
                 smp = sample.objects.filter(type = 'LE')
             
             elif (ty == 'Management'):
-                smp = sample.objects.filter(type = 'Management')
+                smp = sample.objects.filter(type = 'MANAGEMENT')
 
     context = {
         "smp" : smp    

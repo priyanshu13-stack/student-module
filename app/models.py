@@ -1,59 +1,59 @@
 from django.db import models
 
 allotedquotachoices = (
-    ('opno','OPNO'),
-    ('scno', 'SCNO'),
-    ('stno','STNO'),
-    ('nodf','NODF'),
-    ('noph','NOPH'),
+    ('OPNO','OPNO'),
+    ('SCNO', 'SCNO'),
+    ('STNO','STNO'),
+    ('NODF','NODF'),
+    ('NOPH','NOPH'),
 )
 
 allottedcategorychoices = (
-    ('hs', 'HS'),
-    ('os', 'OS'),
-    ('ai', 'AI'),
+    ('HS', 'HS'),
+    ('OS', 'OS'),
+    ('AI', 'AI'),
 )
 
 subcategorychoices = (
-    ('defence','DEFENCE'),
-    ('jain', 'JAIN'),
-    ('muslim','MUSLIM'),
-    ('sikh','SIKH'),
-    ('pwd','PWD'),
-    ('jk','JK'),
+    ('DEFENCE','DEFENCE'),
+    ('JAIN', 'JAIN'),
+    ('MUSLIM','MUSLIM'),
+    ('SIKH','SIKH'),
+    ('PWD','PWD'),
+    ('JK','JK'),
 )
 
 regionchoices = (
-    ('delhi', 'DELHI'),
-    ('outside delhi', 'OUTSIDE DELHI'),
+    ('DELHI', 'DELHI'),
+    ('OUTSIDE DELHI', 'OUTSIDE DELHI'),
 )
 
 categorychoices = (
-    ('gen', 'GEN'),
-    ('sc', 'SC'),
-    ('st', 'ST'),
-    ('obc', 'OBC'),
-    ('ews', 'EWS'),
-    ('aicte', 'AICTE'),
+    ('GN','GN'),
+    ('SC', 'SC'),
+    ('ST', 'ST'),
+    ('OBC', 'OBC'),
+    ('EWS', 'EWS'),
+    ('AICTE', 'AICTE'),
 )
 
 genderchoices = (
-    ('male', 'MALE'),
-    ('female', 'FEMALE'),
-    ('other', 'OTHER'),
+    ('MALE', 'MALE'),
+    ('FEMALE', 'FEMALE'),
+    ('OTHER', 'OTHER'),
 )
 
 typechoices = (
-    ('regular', 'REGULAR'),
-    ('upgraded', 'UPGRADED'),
-    ('le', 'LE'),
+    ('REGULAR', 'REGULAR'),
+    ('UPGRADED', 'UPGRADED'),
+    ('LE', 'LE'),
 )
 
 streamchoices = (
-    ('cse','CSE'),
-    ('it','IT'),
-    ('ece','ECE'),
-    ('eee','EEE'),
+    ('CSE','CSE'),
+    ('IT','IT'),
+    ('ECE','ECE'),
+    ('EEE','EEE'),
 )
 class sample(models.Model):
     type = models.CharField(max_length=10, choices= typechoices ,default='Regular')
