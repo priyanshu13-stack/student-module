@@ -266,7 +266,7 @@
                       </label>
                     </div>
                   </div> -->
-                  <button type="submit" class="btn btn-primary" style="text-align: center;">Show Data</button>
+                  <button type="submit" class="btn btn-primary btn-primary active" style="text-align: center;">Show Data</button>
                   <br>
             </form>
           </div>
@@ -355,18 +355,26 @@
                 <td>{{k.address}}</td>
                 <td>{{k.aggregate}}</td>
                 <td>{{k.pcm}}</td>
-                <td> <a class="button-10" role="button" href="{% url 'app:update' k.id %}">Update</a>
-                    <br>
-                <a class="button-11" role="button" href="{% url 'app:delete' k.id %}">Delete</a>
+                <td> <div>
+                  <a class="btn btn-primary btn-sm active" role="button" href="{% url 'app:update' k.id %}">Update</a>
+                </div>
+                <br>
+                <div>
+                  <a class="btn btn-sm btn-danger active" role="button" href="{% url 'app:delete' k.id %}">Delete</a>
+                </div>
+                </div>
                 </td>
             </tr>
             {% endfor %}
-            <!-- <a href="{% url 'app:download' %}" class="btn btn-primary" style="position:relative; left:45px; top:-20px;">Download File</a> -->
+    
+    </table>
+    <center>
+      <a href="{% url 'app:download_file' %}" class="btn btn-primary btn-lg active" style="position:relative; left:45px; top:20px;">Download File</a>
+    </center>
     {% else %}
             <br><br><br><br>
             <h4 style="text-align:center; font-family:Consolas">No records found!</h4>
     {% endif %}
-    </table>
     <br>
         <script>
             var i = 1;

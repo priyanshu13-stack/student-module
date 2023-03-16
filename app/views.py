@@ -6,6 +6,7 @@ from tablib import Dataset
 from django.http import HttpResponse
 from django.template import loader
 import xlwt
+import csv
 from .forms import sampleform
 
 def upload(request):
@@ -321,3 +322,27 @@ def delete_all(request):
 
 def upload_new(request):
     return redirect('app:upload')
+
+
+def validation1(self):
+    if (self == True):
+        return "YES"
+    else:
+        return "NO"
+
+def download_file(request):
+    response = HttpResponse(content_type = 'text/csv')
+    response['Content-Disposition'] = 'attachment; filename="data.csv"'
+
+    writer = csv.writer(response)
+    writer.writerow(['SNo.', 'Type','Admitted', 'Enrollment Number', 'Name','Management','Year of Admission','IP Application Number','Father Name','Mother Name','Stream','DOB','Gender','Category','SubCategory','Region','Rank','Allotted Quota','Allotted Category','Student Mobile','Email ID','Father Mobile','Address','Aggregate','PCM'])
+
+    smp = sample.objects.all()
+    ind = 1
+
+    for i in smp:
+        writer.writerow([ind, i.type, validation1(i.admitted), i.enrollmentno, i.name,validation1(i.management),i.yearofadmission.strftime('%Y'),i.appno,i.Fname,i.Mname,i.stream,i.DOB.strftime('%d-%m-%Y'),i.gender,i.category,i.subcategory,i.region,i.rank,i.allottedquota,i.allottedcategory,i.studentmobile,i.emailid,i.fathermobile,i.address,i.aggregate,i.pcm])
+
+        ind+=1
+
+    return response
