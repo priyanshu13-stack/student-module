@@ -58,11 +58,11 @@ streamchoices = (
 class sample(models.Model):
     type = models.CharField(max_length=10, choices= typechoices ,default='Regular')
     admitted = models.BooleanField(default=False)
-    enrollmentno = models.IntegerField(null = True, default=None , blank=True)
+    enrollmentno = models.IntegerField(null = True, default = None , blank=True, unique = True)
     name = models.CharField(max_length=100, default=False)
     management = models.BooleanField(default = False)
     yearofadmission = models.DateTimeField(default=False)
-    appno = models.CharField(default=False, max_length=200)
+    appno = models.CharField(default=False, max_length=200, unique= True)
     Fname = models.CharField(max_length=200, default=False)
     Mname = models.CharField(max_length=200, default=False)
     stream = models.CharField(max_length=200, choices= streamchoices,default=False)

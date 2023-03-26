@@ -112,51 +112,13 @@
     </head>
     <body>
     <br>
-<!--     
-    <h3 style="position: relative; left: 2.6%; ">Preferences</h3>
-        <div style="position: relative; left:45px;">
-            <div class="nav-item dropdown">
-                <a href="{% url 'app:home' %}" class="btn btn-outline-primary btn-sm">All Data</a>&nbsp;&nbsp;
-                <a href="{% url 'app:sort' %}" class="btn btn-outline-primary btn-sm">Sort by Rank</a>&nbsp;&nbsp;
-            <a class="btn btn-outline-primary btn-sm" class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Quota
-            </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="{% url 'app:quota_gn' %}">General</a></li>
-                    <li><a class="dropdown-item" href="{% url 'app:quota_obc' %}">OBC</a></li>
-                    <li><a class="dropdown-item" href="{% url 'app:quota_sc' %}">SC</a></li>
-                    <li><a class="dropdown-item" href="{% url 'app:quota_st' %}">ST</a></li>
-              </ul>&nbsp;
-
-                <a class="btn btn-outline-primary btn-sm" class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Gender
-            </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="{% url 'app:gender_m' %}">Male</a></li>
-                    <li><a class="dropdown-item" href="{% url 'app:gender_f' %}">Female</a></li>
-              </ul>&nbsp;
-
-                <a class="btn btn-outline-primary btn-sm" class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Branch
-            </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="{% url 'app:branch_cse' %}">CSE</a></li>
-                    <li><a class="dropdown-item" href="{% url 'app:branch_it' %}">IT</a></li>
-                    <li><a class="dropdown-item" href="{% url 'app:branch_ece' %}">ECE</a></li>
-                    <li><a class="dropdown-item" href="{% url 'app:branch_eee' %}">EEE</a></li>
-              </ul>&nbsp;
-
-            </div>
-
-        </div>
-</div> -->
 
 <br><br>
 <main role="main" class="container">
 
   <div>
         <h3>Filters</h3>
-            <form action="{% url 'app:filter' %}" method="post">
+            <form action="{% url 'app:filter' %}" method="post" id = "data">
               {% csrf_token %}
                   <div class="form-row">
                     <div class="form-group col-md-6">
@@ -209,7 +171,6 @@
                           <option selected>Choose Region</option>
                           <option>Delhi</option>
                           <option>Outside Delhi</option>
-                          <!-- <option>Other</option> -->
                         </select>
                       </div>
 
@@ -222,51 +183,8 @@
                           <option>Lateral Entry</option>
                         </select>
                       </div>
-                    
-
-                    <!-- <div class="form-group col-md-6">
-                      <label for="inputEmail4">Email</label>
-                      <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
-                    </div>
-                    <div class="form-group col-md-6">
-                      <label for="inputPassword4">Password</label>
-                      <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="inputAddress">Address</label>
-                    <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
-                  </div>
-                  <div class="form-group">
-                    <label for="inputAddress2">Address 2</label>
-                    <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
-                  </div>
-                  <div class="form-row">
-                    <div class="form-group col-md-6">
-                      <label for="inputCity">City</label>
-                      <input type="text" class="form-control" id="inputCity">
-                    </div>
-                    <div class="form-group col-md-4">
-                      <label for="inputState">State</label>
-                      <select id="inputState" class="form-control">
-                        <option selected>Choose...</option>
-                        <option>...</option>
-                      </select>
-                    </div>
-                    <div class="form-group col-md-2">
-                      <label for="inputZip">Zip</label>
-                      <input type="text" class="form-control" id="inputZip">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id="gridCheck">
-                      <label class="form-check-label" for="gridCheck">
-                        Check me out
-                      </label>
-                    </div>
-                  </div> -->
                   <button type="submit" class="btn btn-primary btn-primary active" style="text-align: center;">Show Data</button>
+                  <center><button onclick="download()" class="btn btn-primary btn-lg active" style="position:relative; left:45px; top:20px;">Download File</button></center>
                   <br>
             </form>
           </div>
@@ -368,9 +286,7 @@
             {% endfor %}
     
     </table>
-    <center>
-      <a href="{% url 'app:download_file' %}" class="btn btn-primary btn-lg active" style="position:relative; left:45px; top:20px;">Download File</a>
-    </center>
+    
     {% else %}
             <br><br><br><br>
             <h4 style="text-align:center; font-family:Consolas">No records found!</h4>
@@ -382,6 +298,15 @@
             number.innerHTML = `${i}`;
             i+=1;
         });
+        
+        function download(){
+            alert(document.getElementById("data"));
+            document.getElementsByName("data").action = "{% url 'app:download_file' %}" ;
+            alert(document.getElementById("data").action);
+            document.getElementById("data").submit();
+        }
+
+
         </script>
   </body>
 <br><br>
