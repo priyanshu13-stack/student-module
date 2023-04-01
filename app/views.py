@@ -62,82 +62,181 @@ def filter(request):
 
             if is_valid_query(srt):
                 if (srt == 'Increasing Order'):
-                    smp = sample.objects.order_by('rank')
+                    smp = smp.order_by('rank')
 
                 elif (srt == 'Decreasing Order'):
-                    smp = sample.objects.order_by('-rank')
+                    smp = smp.order_by('-rank')
 
             if is_valid_query(cat):
                 if (cat == 'General'):
-                    smp = sample.objects.filter(category = 'GN')
+                    smp = smp.filter(category = 'GN')
 
                 elif (cat == 'OBC'):
-                    smp = sample.objects.filter(category = 'OBC')
+                    smp = smp.filter(category = 'OBC')
 
                 elif (cat == 'SC'):
-                    smp = sample.objects.filter(category = 'SC')
+                    smp = smp.filter(category = 'SC')
 
                 elif (cat == 'ST'):
-                    smp = sample.objects.filter(category = 'ST')
+                    smp = smp.filter(category =  'ST')
 
                 elif (cat == 'EWS'):
-                    smp = sample.objects.filter(category = 'EWS')
+                    smp = smp.filter(category = 'EWS')
 
                 elif (cat == 'AICTE'):
-                    smp = sample.objects.filter(category = 'AICTE')
+                    smp = smp.filter(category = 'AICTE')
 
 
             if is_valid_query(gen):
                 if (gen == 'Male'):
-                    smp = sample.objects.filter(gender = 'MALE')
+                    smp = smp.filter(gender = 'MALE')
                 
                 elif (gen == 'Female'):
-                    smp = sample.objects.filter(gender = 'FEMALE')
+                    smp = smp.filter(gender = 'FEMALE')
 
                 elif (gen == 'Other'):
-                    smp = sample.objects.filter(gender = 'OTHER')
+                    smp = smp.filter(gender = 'OTHER')
 
 
             if is_valid_query(br):
                 if (br == 'CSE'):
-                    smp = sample.objects.filter(stream = 'CSE')
+                    smp = smp.filter(stream = 'CSE')
                 
                 elif (br == 'IT'):
-                    smp = sample.objects.filter(stream = 'IT')
+                    smp = smp.filter(stream = 'IT')
                 
                 elif (br == 'ECE'):
-                    smp = sample.objects.filter(stream = 'ECE')
+                    smp = smp.filter(stream = 'ECE')
 
                 elif (br == 'EEE'):
-                    smp = sample.objects.filter(stream = 'EEE')
+                    smp = smp.filter(stream = 'EEE')
 
 
             if is_valid_query(re):
                 if (re == 'Outside Delhi'):
-                    smp = sample.objects.filter(region = 'OUTSIDE DELHI')
+                    smp = smp.filter(region = 'OUTSIDE DELHI')
 
                 elif (re == 'Delhi'):
-                    smp = sample.objects.filter(region = 'DELHI')
+                    smp = smp.filter(region = 'DELHI')
                 
             if is_valid_query(ty):
                 if (ty == 'Regular'):
-                    smp = sample.objects.filter(type = 'REGULAR')
+                    smp = smp.filter(type = 'REGULAR')
                 
                 elif (ty == 'Upgraded Student'):
-                    smp = sample.objects.filter(type = 'UPGRADE')
+                    smp = smp.filter(type = 'UPGRADE')
 
                 elif (ty == 'Lateral Entry'):
-                    smp = sample.objects.filter(type = 'LE')
+                    smp = smp.filter(type = 'LE')
                 
                 elif (ty == 'Management'):
-                    smp = sample.objects.filter(type = 'MANAGEMENT')
+                    smp = smp.filter(type = 'MANAGEMENT')
 
     context = {
         "smp" : smp    
     }
-
+    
     return render(request, "app/home.html", context)  
 
+
+
+def download_file(request):
+    response = HttpResponse(content_type = 'text/csv')
+    response['Content-Disposition'] = 'attachment; filename="data.csv"'
+
+    writer = csv.writer(response)
+    writer.writerow(['SNo.', 'Type','Admitted', 'Enrollment Number', 'Name','Management','Year of Admission','IP Application Number','Father Name','Mother Name','Stream','DOB','Gender','Category','SubCategory','Region','Rank','Allotted Quota','Allotted Category','Student Mobile','Email ID','Father Mobile','Address','Aggregate','PCM'])
+
+    smp = sample.objects.all()
+    if request.method == "POST":
+            srt = request.POST.get('sort')
+            cat = request.POST.get('category')
+            gen = request.POST.get('gender')
+            br = request.POST.get('branch')
+            re = request.POST.get('region')
+            ty = request.POST.get('type')
+
+            if is_valid_query(srt):
+                if (srt == 'Increasing Order'):
+                    smp = smp.order_by('rank')
+
+                elif (srt == 'Decreasing Order'):
+                    smp = smp.order_by('-rank')
+
+            if is_valid_query(cat):
+                if (cat == 'General'):
+                    smp = smp.filter(category = 'GN')
+
+                elif (cat == 'OBC'):
+                    smp = smp.filter(category = 'OBC')
+
+                elif (cat == 'SC'):
+                    smp = smp.filter(category = 'SC')
+
+                elif (cat == 'ST'):
+                    smp = smp.filter(category =  'ST')
+
+                elif (cat == 'EWS'):
+                    smp = smp.filter(category = 'EWS')
+
+                elif (cat == 'AICTE'):
+                    smp = smp.filter(category = 'AICTE')
+
+
+            if is_valid_query(gen):
+                if (gen == 'Male'):
+                    smp = smp.filter(gender = 'MALE')
+                
+                elif (gen == 'Female'):
+                    smp = smp.filter(gender = 'FEMALE')
+
+                elif (gen == 'Other'):
+                    smp = smp.filter(gender = 'OTHER')
+
+
+            if is_valid_query(br):
+                if (br == 'CSE'):
+                    smp = smp.filter(stream = 'CSE')
+                
+                elif (br == 'IT'):
+                    smp = smp.filter(stream = 'IT')
+                
+                elif (br == 'ECE'):
+                    smp = smp.filter(stream = 'ECE')
+
+                elif (br == 'EEE'):
+                    smp = smp.filter(stream = 'EEE')
+
+
+            if is_valid_query(re):
+                if (re == 'Outside Delhi'):
+                    smp = smp.filter(region = 'OUTSIDE DELHI')
+
+                elif (re == 'Delhi'):
+                    smp = smp.filter(region = 'DELHI')
+                
+            if is_valid_query(ty):
+                if (ty == 'Regular'):
+                    smp = smp.filter(type = 'REGULAR')
+                
+                elif (ty == 'Upgraded Student'):
+                    smp = smp.filter(type = 'UPGRADE')
+
+                elif (ty == 'Lateral Entry'):
+                    smp = smp.filter(type = 'LE')
+                
+                elif (ty == 'Management'):
+                    smp = smp.filter(type = 'MANAGEMENT')
+
+
+    ind = 1
+
+    for i in smp:
+        writer.writerow([ind, i.type, validation1(i.admitted), i.enrollmentno, i.name,validation1(i.management),i.yearofadmission.strftime('%Y'),i.appno,i.Fname,i.Mname,i.stream,i.DOB.strftime('%d-%m-%Y'),i.gender,i.category,i.subcategory,i.region,i.rank,i.allottedquota,i.allottedcategory,i.studentmobile,i.emailid,i.fathermobile,i.address,i.aggregate,i.pcm])
+
+        ind+=1
+
+    return response
 
 
 
@@ -330,19 +429,3 @@ def validation1(self):
     else:
         return "NO"
 
-def download_file(request):
-    response = HttpResponse(content_type = 'text/csv')
-    response['Content-Disposition'] = 'attachment; filename="data.csv"'
-
-    writer = csv.writer(response)
-    writer.writerow(['SNo.', 'Type','Admitted', 'Enrollment Number', 'Name','Management','Year of Admission','IP Application Number','Father Name','Mother Name','Stream','DOB','Gender','Category','SubCategory','Region','Rank','Allotted Quota','Allotted Category','Student Mobile','Email ID','Father Mobile','Address','Aggregate','PCM'])
-
-    smp = sample.objects.all()
-    ind = 1
-
-    for i in smp:
-        writer.writerow([ind, i.type, validation1(i.admitted), i.enrollmentno, i.name,validation1(i.management),i.yearofadmission.strftime('%Y'),i.appno,i.Fname,i.Mname,i.stream,i.DOB.strftime('%d-%m-%Y'),i.gender,i.category,i.subcategory,i.region,i.rank,i.allottedquota,i.allottedcategory,i.studentmobile,i.emailid,i.fathermobile,i.address,i.aggregate,i.pcm])
-
-        ind+=1
-
-    return response
