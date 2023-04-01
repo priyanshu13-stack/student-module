@@ -183,8 +183,9 @@
                           <option>Lateral Entry</option>
                         </select>
                       </div>
-                  <button onclick="download()" class="btn btn-primary btn-primary active" style="text-align: center;">Show Data</button>
-                  
+                      <button type="submit" class="btn btn-primary btn-primary active" style="text-align: center;">Show Data</button>
+                      <center><button onclick="download()" id="downbutton" class="btn btn-primary btn-lg active" style="position:relative; left:45px; top:20px;">Download File</button></center>
+                      
                   <br>
             </form>
           </div>
@@ -287,9 +288,8 @@
     
     </table>
 
-    <form action="{% url 'app:download_file' %}" method="post" id = "down">
+    <!-- <form action="{% url 'app:download_file' %}" method="post" id = "down">
       {% csrf_token %}
-      <center><button  id="downbutton" class="btn btn-primary btn-lg active" style="position:relative; left:45px; top:20px;">Download File</button></center>
       <br><br>
       <div>
       <div class="form-row">
@@ -357,7 +357,7 @@
           </div>
         </div>
       
-    </form>
+    </form> -->
 
     {% else %}
             <br><br><br><br>
@@ -372,18 +372,22 @@
         });
         
         function download(){
-            orderf = document.getElementById("order_f").value
-            catf = document.getElementById("cat_f").value
-            genderf = document.getElementById("gender_f").value
-            branchf = document.getElementById("branch_f").value
-            regionf = document.getElementById("region_f").value
-            typef = document.getElementById("type_f").value
-            alert(document.getElementById("order_f").value);
+            document.getElementById("data").setAttribute("action" , "{% url 'app:download_file' %}");
+            // alert(document.getElementById("data").getAttribute("action"));
+            document.getElementById("data").submit();
+
+            // orderf = document.getElementById("order_f").value
+            // catf = document.getElementById("cat_f").value
+            // genderf = document.getElementById("gender_f").value
+            // branchf = document.getElementById("branch_f").value
+            // regionf = document.getElementById("region_f").value
+            // typef = document.getElementById("type_f").value
+            // alert(document.getElementById("order_f").value);
             
-            document.getElementById("data").submit;
-            document.getElementById("downbutton").addEventListener(click, (order_f, cat_f, gender_f, branch_f, region_f, type_f) =>{
-                alert(document.getElementById("order_d").value);
-                hello(order_f, cat_f, gender_f, branch_f, region_f, type_f);
+            // document.getElementById("data").submit;
+            // document.getElementById("downbutton").addEventListener(click, (order_f, cat_f, gender_f, branch_f, region_f, type_f) =>{
+            //     alert(document.getElementById("order_d").value);
+            //     hello(order_f, cat_f, gender_f, branch_f, region_f, type_f);
               // document.getElementById("order_d").value = order_f;
               // document.getElementById("cat_d").value = cat_f;
               // document.getElementById("gender_d").value = gender_f;
@@ -392,22 +396,18 @@
               // document.getElementById("type_d").value = type_f;
 
               // document.getElementById("down").submit;
-            });
+            } ;
 
 
-
-            
-        }
-
-        function hello(order_f, cat_f, gender_f, branch_f, region_f, type_f){
-          document.getElementById("order_d").value = order_f;
-          document.getElementById("cat_d").value = cat_f;
-          document.getElementById("gender_d").value = gender_f;
-          document.getElementById("branch_d").value = branch_f;
-          document.getElementById("region_d").value = region_f;
-          document.getElementById("type_d").value = type_f;
-          document.getElementById("down").submit;
-        }
+        // function hello(order_f, cat_f, gender_f, branch_f, region_f, type_f){
+        //   document.getElementById("order_d").value = order_f;
+        //   document.getElementById("cat_d").value = cat_f;
+        //   document.getElementById("gender_d").value = gender_f;
+        //   document.getElementById("branch_d").value = branch_f;
+        //   document.getElementById("region_d").value = region_f;
+        //   document.getElementById("type_d").value = type_f;
+        //   document.getElementById("down").submit;
+        // }
 
 
         </script>
