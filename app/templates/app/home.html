@@ -118,14 +118,14 @@
 
   <div>
         <h3>Filters</h3>
-            <form action="{% url 'app:filter' %}" method="post" id = "data">
+            <form onsubmit="saveformdata(event)" action="{% url 'app:filter' %}" method="post" id = "data">
               {% csrf_token %}
                   <div class="form-row">
                     <div class="form-group col-md-6">
                       <label for="inputState">Sort by Rank</label>
                       <select id="order_f" class="form-control" name="sort">
-                        <option selected>Choose sorting order</option>
-                        <option>Increasing Order</option>
+                        <option>All</option>
+                        <option >Increasing Order</option>
                         <option>Decreasing Order</option>
                       </select>
                     </div>
@@ -133,7 +133,7 @@
                       <div class="form-group col-md-6">
                         <label for="inputState">Category</label>
                         <select id = "cat_f" class="form-control" name="category">
-                          <option selected>Choose category</option>
+                          <option>All</option>
                           <option>General</option>
                           <option>OBC</option>
                           <option>SC</option>
@@ -146,7 +146,7 @@
                       <div class="form-group col-md-6">
                         <label for="inputState">Gender</label>
                         <select id="gender_f" class="form-control" name="gender">
-                          <option selected>Choose Gender</option>
+                          <!-- <option></option> -->
                           <option>Male</option>
                           <option>Female</option>
                           <option>Other</option>
@@ -157,7 +157,7 @@
                       <div class="form-group col-md-6">
                         <label for="inputState">Branch</label>
                         <select id="branch_f" class="form-control" name="branch">
-                          <option selected>Choose Branch</option>
+                          <option>All</option>
                           <option>CSE</option>
                           <option>IT</option>
                           <option>ECE</option>
@@ -168,7 +168,7 @@
                       <div class="form-group col-md-6">
                         <label for="inputState">Region</label>
                         <select id="region_f" class="form-control" name="region">
-                          <option selected>Choose Region</option>
+                          <option>All</option>
                           <option>Delhi</option>
                           <option>Outside Delhi</option>
                         </select>
@@ -177,39 +177,19 @@
                       <div class="form-group col-md-6">
                         <label for="inputState">Type</label>
                         <select id="type_f" class="form-control" name="type">
-                          <option selected>Choose Type</option>
+                          <option>All</option>
                           <option>Regular</option>
                           <option>Upgraded Student</option>
                           <option>Lateral Entry</option>
                         </select>
                       </div>
                       <button type="submit" class="btn btn-primary btn-primary active" style="text-align: center;">Show Data</button>
-                      <center><button onclick="download()" id="downbutton" class="btn btn-primary btn-lg active" style="position:relative; left:45px; top:20px;">Download File</button></center>
+                      <button onclick="download()" id="downbutton" class="btn btn-primary active" style="position:relative; left: 1%;">Download File</button>
                       
                   <br>
             </form>
           </div>
 </main>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
       {% if smp %}
         <br>
@@ -288,77 +268,6 @@
     
     </table>
 
-    <!-- <form action="{% url 'app:download_file' %}" method="post" id = "down">
-      {% csrf_token %}
-      <br><br>
-      <div>
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <label for="inputState">Sort by Rank</label>
-          <select id="order_d" class="form-control" name="sort">
-            <option selected>Choose sorting order</option>
-            <option>Increasing Order</option>
-            <option>Decreasing Order</option>
-          </select>
-        </div>
-
-          <div class="form-group col-md-6">
-            <label for="inputState">Category</label>
-            <select id="cat_d" class="form-control" name="category">
-              <option selected>Choose category</option>
-              <option>General</option>
-              <option>OBC</option>
-              <option>SC</option>
-              <option>ST</option>
-              <option>EWS</option>
-              <option>AICTE</option>
-            </select>
-          </div>
-
-          <div class="form-group col-md-6">
-            <label for="inputState">Gender</label>
-            <select id="gender_d" class="form-control" name="gender">
-              <option selected>Choose Gender</option>
-              <option>Male</option>
-              <option>Female</option>
-              <option>Other</option>
-            </select>
-          </div>
-
-
-          <div class="form-group col-md-6">
-            <label for="inputState">Branch</label>
-            <select id="branch_d" class="form-control" name="branch">
-              <option selected>Choose Branch</option>
-              <option>CSE</option>
-              <option>IT</option>
-              <option>ECE</option>
-              <option>EEE</option>
-            </select>
-          </div>
-
-          <div class="form-group col-md-6">
-            <label for="inputState">Region</label>
-            <select id="region_d" class="form-control" name="region">
-              <option selected>Choose Region</option>
-              <option>Delhi</option>
-              <option>Outside Delhi</option>
-            </select>
-          </div>
-
-          <div class="form-group col-md-6">
-            <label for="inputState">Type</label>
-            <select id="type_d" class="form-control" name="type">
-              <option selected>Choose Type</option>
-              <option>Regular</option>
-              <option>Upgraded Student</option>
-              <option>Lateral Entry</option>
-            </select>
-          </div>
-        </div>
-      
-    </form> -->
-
     {% else %}
             <br><br><br><br>
             <h4 style="text-align:center; font-family:Consolas">No records found!</h4>
@@ -371,45 +280,37 @@
             i+=1;
         });
         
+        
+
+        if(localStorage.getItem("formData")){
+            let formData = JSON.parse(localStorage.getItem("formData"));
+            document.getElementById("order_f").value = formData.order_f;
+            document.getElementById("cat_f").value = formData.cat_f;
+            document.getElementById("gender_f").value = formData.gender_f;
+            document.getElementById("branch_f").value = formData.branch_f;
+            document.getElementById("region_f").value = formData.region_f;
+            document.getElementById("type_f").value = formData.type_f;
+
+        function saveformdata(event){
+            event.preventDefault(); 
+            let formData = {
+                order_f: document.getElementById("order_f").value,
+                cat_f: document.getElementById("cat_f").value,
+                gender_f: document.getElementById("gender_f").value,
+                branch_f: document.getElementById("branch_f").value,
+                region_f: document.getElementById("region_f").value,
+                type_f: document.getElementById("type_f").value,
+            };
+            localStorage.setItem("formData", JSON.stringify(formData));
+            event.target.submit(); 
+        }
+
+        
         function download(){
             document.getElementById("data").setAttribute("action" , "{% url 'app:download_file' %}");
-            // alert(document.getElementById("data").getAttribute("action"));
             document.getElementById("data").submit();
-
-            // orderf = document.getElementById("order_f").value
-            // catf = document.getElementById("cat_f").value
-            // genderf = document.getElementById("gender_f").value
-            // branchf = document.getElementById("branch_f").value
-            // regionf = document.getElementById("region_f").value
-            // typef = document.getElementById("type_f").value
-            // alert(document.getElementById("order_f").value);
-            
-            // document.getElementById("data").submit;
-            // document.getElementById("downbutton").addEventListener(click, (order_f, cat_f, gender_f, branch_f, region_f, type_f) =>{
-            //     alert(document.getElementById("order_d").value);
-            //     hello(order_f, cat_f, gender_f, branch_f, region_f, type_f);
-              // document.getElementById("order_d").value = order_f;
-              // document.getElementById("cat_d").value = cat_f;
-              // document.getElementById("gender_d").value = gender_f;
-              // document.getElementById("branch_d").value = branch_f;
-              // document.getElementById("region_d").value = region_f;
-              // document.getElementById("type_d").value = type_f;
-
-              // document.getElementById("down").submit;
-            } ;
-
-
-        // function hello(order_f, cat_f, gender_f, branch_f, region_f, type_f){
-        //   document.getElementById("order_d").value = order_f;
-        //   document.getElementById("cat_d").value = cat_f;
-        //   document.getElementById("gender_d").value = gender_f;
-        //   document.getElementById("branch_d").value = branch_f;
-        //   document.getElementById("region_d").value = region_f;
-        //   document.getElementById("type_d").value = type_f;
-        //   document.getElementById("down").submit;
-        // }
-
-
+        }
+        };
         </script>
   </body>
 <br><br>
