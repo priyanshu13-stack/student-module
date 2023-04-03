@@ -5,7 +5,7 @@
 <form action="{% url 'app:delete' item.id %}" method="post">
     {% csrf_token %}
     <a href="{% url 'app:upload' %}">Cancel</a>
-    <input type="submit" name="Confirm">
+    <input type="submit" name="Confirm" value="Confirm">
 </form>
 
 {% endblock %}

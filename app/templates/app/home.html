@@ -288,7 +288,8 @@
 
     {% else %}
             <br><br><br><br>
-            <h4 style="text-align:center; font-family:Consolas">No records found!</h4>
+            <h4 style="text-align:center; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;">No data found!</h4>
+            <h4 style="text-align:center; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;">Try choosing other filter</h4>
     {% endif %}
     <br>
         <script>
@@ -298,31 +299,6 @@
             i+=1;
         });
         
-        
-
-        // if(localStorage.getItem("formData")){
-        //     let formData = JSON.parse(localStorage.getItem("formData"));
-        //     document.getElementById("order_f").value = formData.order_f;
-        //     document.getElementById("cat_f").value = formData.cat_f;
-        //     document.getElementById("gender_f").value = formData.gender_f;
-        //     document.getElementById("branch_f").value = formData.branch_f;
-        //     document.getElementById("region_f").value = formData.region_f;
-        //     document.getElementById("type_f").value = formData.type_f;
-
-        // function saveformdata(event){
-        //     event.preventDefault(); 
-        //     let formData = {
-        //         order_f: document.getElementById("order_f").value,
-        //         cat_f: document.getElementById("cat_f").value,
-        //         gender_f: document.getElementById("gender_f").value,
-        //         branch_f: document.getElementById("branch_f").value,
-        //         region_f: document.getElementById("region_f").value,
-        //         type_f: document.getElementById("type_f").value,
-        //     };
-        //     localStorage.setItem("formData", JSON.stringify(formData));
-        //     event.target.submit(); 
-        // }
-
         
           function download(){
               document.getElementById("data").setAttribute("action" , "{% url 'app:download_file' %}");
