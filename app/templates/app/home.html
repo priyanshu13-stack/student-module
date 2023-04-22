@@ -187,8 +187,33 @@
                           <option>Regular</option>
                           <option>Upgraded Student</option>
                           <option>Lateral Entry</option>
+                          <option>Management Student</option>
+                          <option>Non-Management Student</option>
                         </select>
                       </div>
+
+                      <div class="form-group col-md-6">
+                        <label for="inputState">Allotted Quota</label>
+                        <select id="aq" class="form-control" name="aq" onchange="savedata(this)">
+                          <option disabled>Choose Alloted Quota</option>
+                          <option selected>All</option>
+                          <option>HS</option>
+                          <option>OS</option>
+                          <option>AI</option>
+                        </select>
+                      </div>
+
+                      <div class="form-group col-md-6">
+                        <label for="inputState">Allotted Category</label>
+                        <select id="ac" class="form-control" name="ac" onchange="savedata(this)">
+                          <option disabled>Choose Allotted Category</option>
+                          <option selected>All</option>
+                          <option>OPNO</option>
+                          <option>SCNO</option>
+                          <option>NODF</option>
+                        </select>
+                      </div>
+
                       <button type="submit" class="btn btn-primary btn-primary active" style="text-align: center;">Show Data</button>
                       <button onclick="download()" id="downbutton" class="btn btn-primary active" style="position:relative; left: 1%;">Download File</button>
                       
@@ -197,7 +222,7 @@
           </div>
 </main>
 
-<script>
+<!-- <script>
       function savedata(dropdown){
         localStorage.setItem(dropdown.name, dropdown.value);
       }
@@ -212,7 +237,7 @@
             }
         }
       }
-</script>
+</script> -->
 
 
       {% if smp %}
@@ -309,7 +334,13 @@
           function download(){
               document.getElementById("data").setAttribute("action" , "{% url 'app:download_file' %}");
               document.getElementById("data").submit();
-          
+              location.reload(true);
+
+              // document.getElementById("data").setAttribute("action" , "{% url  'app:filter' %}");
+              // alert(document.getElementById("data").getAttribute("action"));
+
+            // var my = document.getElementById("data");
+
         };
         </script>
   </body>
