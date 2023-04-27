@@ -1,17 +1,15 @@
 from django.db import models
 
 allotedquotachoices = (
-    ('OPNO','OPNO'),
-    ('SCNO', 'SCNO'),
-    ('STNO','STNO'),
-    ('NODF','NODF'),
-    ('NOPH','NOPH'),
-)
-
-allottedcategorychoices = (
     ('HS', 'HS'),
     ('OS', 'OS'),
     ('AI', 'AI'),
+)
+
+allottedcategorychoices = (
+    ('OPNO','OPNO'),
+    ('SCNO', 'SCNO'),
+    ('NODF','NODF'),
 )
 
 subcategorychoices = (
@@ -47,6 +45,7 @@ typechoices = (
     ('REGULAR', 'REGULAR'),
     ('UPGRADED', 'UPGRADED'),
     ('LE', 'LE'),
+    ('MANAGEMENT', 'MANAGEMENT'),
 )
 
 streamchoices = (

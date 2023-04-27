@@ -68,6 +68,8 @@ def filter(request):
             br = request.POST.get('branch')
             re = request.POST.get('region')
             ty = request.POST.get('type')
+            alq = request.POST.get('aq')
+            alc = request.POST.get('ac')
 
             if is_valid_query(srt):
                 if (srt == 'Increasing Order'):
@@ -138,8 +140,31 @@ def filter(request):
                 elif (ty == 'Lateral Entry'):
                     smp = smp.filter(type = 'LE')
                 
-                elif (ty == 'Management'):
-                    smp = smp.filter(type = 'MANAGEMENT')
+                elif (ty == 'Management Student'):
+                    smp = smp.filter(management = True)
+
+                elif (ty == 'Non-Management Student'):
+                    smp = smp.filter(management = False)
+
+            if is_valid_query(alq):
+                if (alq == 'HS'):
+                    smp = smp.filter(allottedquota = "HS")
+                
+                elif (alq == 'OS'):
+                    smp = smp.filter(allottedquota = "OS")
+
+                elif (alq == 'AI'):
+                    smp = smp.filter(allottedquota = "AI")
+
+            if is_valid_query(alc):
+                if (alc == 'OPNO'):
+                    smp = smp.filter(allottedcategory = "OPNO")
+                
+                elif (alc == 'SCNO'):
+                    smp = smp.filter(allottedcategory = "SCNO")
+                
+                elif (alc == 'NODF'):
+                    smp = smp.filter(allottedcategory = "NODF")
 
     context = {
         "smp" : smp    
@@ -164,6 +189,8 @@ def download_file(request):
             br = request.POST.get('branch')
             re = request.POST.get('region')
             ty = request.POST.get('type')
+            alq = request.POST.get('aq')
+            alc = request.POST.get('ac')
 
             if is_valid_query(srt):
                 if (srt == 'Increasing Order'):
@@ -234,8 +261,31 @@ def download_file(request):
                 elif (ty == 'Lateral Entry'):
                     smp = smp.filter(type = 'LE')
                 
-                elif (ty == 'Management'):
-                    smp = smp.filter(type = 'MANAGEMENT')
+                elif (ty == 'Management Student'):
+                    smp = smp.filter(management = True)
+
+                elif (ty == 'Non-Management Student'):
+                    smp = smp.filter(management = False)
+
+            if is_valid_query(alq):
+                if (alq == 'HS'):
+                    smp = smp.filter(allottedquota = "HS")
+                
+                elif (alq == 'OS'):
+                    smp = smp.filter(allottedquota = "OS")
+
+                elif (alq == 'AI'):
+                    smp = smp.filter(allottedquota = "AI")
+
+            if is_valid_query(alc):
+                if (alc == 'OPNO'):
+                    smp = smp.filter(allottedcategory = "OPNO")
+                
+                elif (alc == 'SCNO'):
+                    smp = smp.filter(allottedcategory = "SCNO")
+                
+                elif (alc == 'NODF'):
+                    smp = smp.filter(allottedcategory = "NODF")
 
 
     ind = 1
