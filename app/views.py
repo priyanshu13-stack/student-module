@@ -1,33 +1,42 @@
 from django.shortcuts import render,redirect, get_object_or_404
 from .models import sample
+from django.utils.datastructures import MultiValueDictKeyError
 from .resources import sampleResource
 from django.contrib import messages
 from tablib import Dataset
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseBadRequest
 from django.template import loader
 import xlwt
 import csv
+import json
+from django.db import IntegrityError
 from .forms import sampleform
 
 def upload(request):
     smp = sample.objects.all()
     if (request.method == "POST"):
-        sample_resource = sampleResource()
-        dataset = Dataset()
-        new_file = request.FILES['myfile']
+        try:
+            sample_resource = sampleResource()
+            dataset = Dataset()
+            new_file = request.FILES['myfile']
 
-        if not new_file.name.endswith('xlsx'):
-            messages.info(request, 'File format not supported')
-            return render(request, 'app/upload.html')
+            if not new_file.name.endswith('xlsx'):
+                messages.info(request, 'File format not supported')
+                return render(request, 'app/upload.html')
 
-        imported_data = dataset.load(new_file.read(),format='xlsx')
-        for i in imported_data:
-            value = sample(
-                i[0],i[1],i[2],i[3],i[4],i[5],i[6],i[7],i[8],i[9],i[10],i[11],i[12],i[13],i[14],i[15],i[16],
-                i[17],i[18],i[19],i[20],i[21],i[22],i[23],i[24],
-            )
-            value.save()
-        return redirect('app:filter')
+            imported_data = dataset.load(new_file.read(),format='xlsx')
+            for i in imported_data:
+                value = sample(
+                    i[0],i[1],i[2],i[3],i[4],i[5],i[6],i[7],i[8],i[9],i[10],i[11],i[12],i[13],i[14],i[15],i[16],
+                    i[17],i[18],i[19],i[20],i[21],i[22],i[23],i[24],
+                )
+                value.save()
+            return redirect('app:filter')
+        except MultiValueDictKeyError:
+            return redirect('app:upload')
+        except IntegrityError as e :
+            return HttpResponseBadRequest("Data already exists. Try uploading another file!")
+
     
     context = {
         "smp" : smp,

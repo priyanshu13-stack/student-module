@@ -124,7 +124,8 @@
                     <div class="form-group col-md-6">
                       <label for="inputState">Sort by Rank</label>
                       <select id="order_f" class="form-control" name="sort" onchange="savedata(this)">
-                        <option selected disabled>Choose Order</option>
+                        <option disabled>Choose Order</option>
+                        <option selected>All</option>
                         <option >Increasing Order</option>
                         <option>Decreasing Order</option>
                       </select>
@@ -133,7 +134,8 @@
                       <div class="form-group col-md-6">
                         <label for="inputState">Category</label>
                         <select id = "cat_f" class="form-control" name="category" onchange="savedata(this)">
-                          <option selected disabled>Choose Category</option>
+                          <option disabled>Choose Category</option>
+                          <option selected>All</option>
                           <option>General</option>
                           <option>OBC</option>
                           <option>SC</option>
@@ -146,7 +148,8 @@
                       <div class="form-group col-md-6">
                         <label for="inputState">Gender</label>
                         <select id="gender_f" class="form-control" name="gender" onchange="savedata(this)">
-                          <option selected disabled>Choose Gender</option>
+                          <option disabled>Choose Gender</option>
+                          <option selected>All</option>
                           <option>Male</option>
                           <option>Female</option>
                           <option>Other</option>
@@ -157,7 +160,8 @@
                       <div class="form-group col-md-6">
                         <label for="inputState">Branch</label>
                         <select id="branch_f" class="form-control" name="branch" onchange="savedata(this)">
-                          <option selected disabled>Choose Branch</option>
+                          <option disabled>Choose Branch</option>
+                          <option selected>All</option>
                           <option>CSE</option>
                           <option>IT</option>
                           <option>ECE</option>
@@ -168,7 +172,8 @@
                       <div class="form-group col-md-6">
                         <label for="inputState">Region</label>
                         <select id="region_f" class="form-control" name="region" onchange="savedata(this)">
-                          <option selected disabled>Choose Region</option>
+                          <option disabled>Choose Region</option>
+                          <option selected>All</option>
                           <option>Delhi</option>
                           <option>Outside Delhi</option>
                         </select>
@@ -177,7 +182,8 @@
                       <div class="form-group col-md-6">
                         <label for="inputState">Type</label>
                         <select id="type_f" class="form-control" name="type" onchange="savedata(this)">
-                          <option selected disabled>Choose Student Type</option>
+                          <option disabled>Choose Student Type</option>
+                          <option selected>All</option>
                           <option>Regular</option>
                           <option>Upgraded Student</option>
                           <option>Lateral Entry</option>
@@ -288,7 +294,8 @@
 
     {% else %}
             <br><br><br><br>
-            <h4 style="text-align:center; font-family:Consolas">No records found!</h4>
+            <h4 style="text-align:center; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;">No data found!</h4>
+            <h4 style="text-align:center; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;">Try choosing other filter</h4>
     {% endif %}
     <br>
         <script>
@@ -298,31 +305,6 @@
             i+=1;
         });
         
-        
-
-        // if(localStorage.getItem("formData")){
-        //     let formData = JSON.parse(localStorage.getItem("formData"));
-        //     document.getElementById("order_f").value = formData.order_f;
-        //     document.getElementById("cat_f").value = formData.cat_f;
-        //     document.getElementById("gender_f").value = formData.gender_f;
-        //     document.getElementById("branch_f").value = formData.branch_f;
-        //     document.getElementById("region_f").value = formData.region_f;
-        //     document.getElementById("type_f").value = formData.type_f;
-
-        // function saveformdata(event){
-        //     event.preventDefault(); 
-        //     let formData = {
-        //         order_f: document.getElementById("order_f").value,
-        //         cat_f: document.getElementById("cat_f").value,
-        //         gender_f: document.getElementById("gender_f").value,
-        //         branch_f: document.getElementById("branch_f").value,
-        //         region_f: document.getElementById("region_f").value,
-        //         type_f: document.getElementById("type_f").value,
-        //     };
-        //     localStorage.setItem("formData", JSON.stringify(formData));
-        //     event.target.submit(); 
-        // }
-
         
           function download(){
               document.getElementById("data").setAttribute("action" , "{% url 'app:download_file' %}");
