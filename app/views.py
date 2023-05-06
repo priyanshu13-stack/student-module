@@ -93,35 +93,27 @@ def upload(request):
         return render(request, "app/upload.html")
             
 
-# def upload_enroll(request):
-#     smp = sample.objects.all()
-#     if (request.method == "POST"):
-#         try:
-#             sample_resource = sampleResource()
-#             dataset = Dataset()
-#             new_file = request.FILES['enrollfile']
+def upload_enroll(request):
+    if request.method == "POST" and request.FILES['enrollfile']:
+        enrollfile = request.FILES['enrollfile']
+        if enrollfile.name.endswith('.xlsx') or enrollfile.name.endswith('.xls'):
+            data = Dataset().load(enrollfile.read() , format= 'xlsx')
 
-#             if not new_file.name.endswith('xlsx'):
-#                 messages.info(request, 'File format not supported')
-#                 return render(request, 'app/upload.html')
+            for i in data:
+                id = i[0]
+                enrollno = i[1]
+                appno = i[2]
 
-#             imported_data = dataset.load(new_file.read(),format='xlsx')
-#             for i in imported_data:
-#                 value = sample(
-#                     i[0],i[1],i[2],
-#                 )
-#                 value.save()
-#             return redirect('app:filter')
-#         except MultiValueDictKeyError:
-#             return redirect('app:upload')
-#         except IntegrityError as e :
-#             return HttpResponseBadRequest("Data already exists. Try uploading another file!")
+                try :
+                    
 
-    
-#     context = {
-#         "smp" : smp,
-#     }
-#     return render(request, "app/upload.html", context)
+
+
+
+
+
+
+
 
 
 def home(request):
