@@ -137,7 +137,14 @@
         <br><br><br>
         <input type="file" name="myfile" id = "myfile">
         <br><br>
-        <button type="submit" class="btn btn-primary" onclick="uploadfile()">Upload File</button>
+        <button type="submit" class="btn btn-success" onclick="uploadfile()">Upload File</button>
+    </form>
+    <br>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="enrollfile" id ="enrollfile">
+        <br><br>
+        <button type="submit" class="btn btn-success" onclick="uploadfile()">Upload Enrollment Numbers</button>
     </form>
 
 

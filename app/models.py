@@ -56,12 +56,12 @@ streamchoices = (
 )
 class sample(models.Model):
     type = models.CharField(max_length=10, choices= typechoices ,default='Regular')
-    admitted = models.BooleanField(default=False)
+    admitted = models.CharField(max_length=50, default= '',null= True)
     enrollmentno = models.IntegerField(null = True, default = None , blank=True, unique = True)
     name = models.CharField(max_length=100, default=False)
-    management = models.BooleanField(default = False)
+    management = models.CharField(max_length=50, default = '', null= True)
     yearofadmission = models.DateTimeField(default=False)
-    appno = models.CharField(default=False, max_length=200, unique= True)
+    appno = models.CharField(default= "", max_length=200, unique= True)
     Fname = models.CharField(max_length=200, default=False)
     Mname = models.CharField(max_length=200, default=False)
     stream = models.CharField(max_length=200, choices= streamchoices,default=False)
@@ -89,13 +89,13 @@ class sample(models.Model):
         return self.DOB.strftime('%d-%m-%Y')
 
     def admitted_yn(self):
-        if (self.admitted == True):
+        if (self.admitted == "YES"):
             return "YES"
         else:
             return "NO"
 
     def management_yn(self):
-        if (self.management == True):
+        if (self.management == "YES"):
             return "YES"
         else:
             return "NO"
