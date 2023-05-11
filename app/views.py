@@ -10,7 +10,7 @@ import xlwt
 import csv
 import json
 from django.db import IntegrityError
-from .forms import sampleform
+from .forms import sampleform,enrollform
 
 def upload(request):
     smp = sample.objects.all()
@@ -50,7 +50,7 @@ def upload(request):
                     pcm = i[24]
 
                     try:
-                        # if unique values exist in the database or not 
+                        # if unique values exist in the database or not
                         existing_record = sample.objects.get(enrollmentno = enrollmentno, appno = appno)
                     
                     except sample.DoesNotExist:
@@ -94,27 +94,23 @@ def upload(request):
             
 
 def upload_enroll(request):
-    if request.method == "POST" and request.FILES['enrollfile']:
-        enrollfile = request.FILES['enrollfile']
-        if enrollfile.name.endswith('.xlsx') or enrollfile.name.endswith('.xls'):
-            data = Dataset().load(enrollfile.read() , format= 'xlsx')
+    if request.method == "POST":
+        form = enrollform(request.POST, request.FILES)
+        if form.is_valid():
+            upload_file = request.FILES['file']
+            if upload_file.name.endswith('.xlsx') or upload_file.name.endswith('.xls'):
+                data = Dataset().load(upload_file.read() , format= 'xlsx')
+                for i in data:
+                    sample.objects.filter(appno = i[1]).update(enrollmentno = i[2])  
 
-            for i in data:
-                id = i[0]
-                enrollno = i[1]
-                appno = i[2]
-
-                try :
+                return redirect("app:filter")
+            else:
+                form.add_error('file', 'File format not supported')
+    else:
+        form = enrollform()
+    
+    return render(request, "app/upload.html", {'form' : form})
                     
-
-
-
-
-
-
-
-
-
 
 def home(request):
     smp = sample.objects.all()
@@ -554,6 +550,8 @@ def delete_all(request):
 def upload_new(request):
     return redirect('app:upload')
 
+def upload_enr(request):
+    return render(request, "app/uploadenr.html")
 
 def validation1(self):
     if (self == True):

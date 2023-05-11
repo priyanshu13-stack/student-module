@@ -54,12 +54,23 @@ streamchoices = (
     ('ECE','ECE'),
     ('EEE','EEE'),
 )
+
+admittedchoices = (
+    ('YES', 'YES'),
+    ('NO', 'NO'),
+)
+
+managementchoices = (
+    ('YES', 'YES'),
+    ('NO', 'NO'),
+)
+
 class sample(models.Model):
     type = models.CharField(max_length=10, choices= typechoices ,default='Regular')
-    admitted = models.CharField(max_length=50, default= '',null= True)
+    admitted = models.CharField(max_length=50, default= '',null= True, choices= admittedchoices)
     enrollmentno = models.IntegerField(null = True, default = None , blank=True, unique = True)
     name = models.CharField(max_length=100, default=False)
-    management = models.CharField(max_length=50, default = '', null= True)
+    management = models.CharField(max_length=50, default = '', null= True, choices= managementchoices)
     yearofadmission = models.DateTimeField(default=False)
     appno = models.CharField(default= "", max_length=200, unique= True)
     Fname = models.CharField(max_length=200, default=False)

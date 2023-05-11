@@ -7,13 +7,13 @@ class DateInput(forms.DateInput):
 class sampleform(forms.ModelForm):
     class Meta:
         model = sample
-        management =  forms.BooleanField()
-        admitted = forms.BooleanField()
         fields = '__all__'
         widgets = {
             'type': forms.Select(attrs={'class': 'form-control'}),
+            'admitted': forms.Select(attrs={'class': 'form-control'}),
             'enrollmentno': forms.TextInput(attrs={'class': 'form-control'}),
             'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'management': forms.Select(attrs={'class': 'form-control'}),
             'yearofadmission': forms.TextInput(attrs={'class': 'form-control'}),
             'appno': forms.TextInput(attrs={'class': 'form-control'}),
             'Fname': forms.TextInput(attrs={'class': 'form-control'}),
@@ -34,3 +34,7 @@ class sampleform(forms.ModelForm):
             'aggregate': forms.TextInput(attrs={'class': 'form-control'}),
             'pcm': forms.TextInput(attrs={'class': 'form-control'}),
         }
+
+
+class enrollform(forms.Form):
+    file = forms.FileField()

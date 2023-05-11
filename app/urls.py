@@ -24,5 +24,6 @@ urlpatterns = [
     path('branch_ece', views.branch_ece, name = "branch_ece"),
     path('branch_eee', views.branch_eee, name = "branch_eee"),
     path(r'^download/$', views.download, name = "download"),
-    path('download_file', views.download_file, name="download_file")
+    path('download_file', views.download_file, name="download_file"),
+    path('upload_enroll', views.upload_enroll, name = "upload_enroll"),
 ]

@@ -8,4 +8,3 @@ class sampleAdmin(ImportExportModelAdmin):
     list_display = ('type','admitted','enrollmentno', 'name', 'management', 'yearofadmission', 'appno','Fname', 'Mname','stream' ,'DOB', 'gender', 'category', 'subcategory', 'region',
                     'rank','allottedquota', 'allottedcategory','studentmobile' ,'emailid','fathermobile' ,'address','aggregate', 'pcm')
     pass
-

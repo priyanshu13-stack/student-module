@@ -51,6 +51,7 @@
       <a class="navbar-brand" href="{% url 'app:filter' %}">Home</a>
       <a class="navbar-brand" href="{% url 'app:upload_new' %}">Upload</a>
       <a class="navbar-brand" href="{% url 'app:deleteall' %}">Delete all Records</a>
+      <a class="navbar-brand" href="{% url 'app:upload_enroll' %}">Upload Enrollment No</a>
       </div>
     </nav>
 
@@ -139,15 +140,7 @@
         <br><br>
         <button type="submit" class="btn btn-success" onclick="uploadfile()">Upload File</button>
     </form>
-    <!-- enrollment upload button  -->
     <br>
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <input type="file" name="enrollfile" id ="enrollfile">
-        <br><br>
-        <button type="submit" class="btn btn-success" onclick="uploadfile()">Upload Enrollment Numbers</button>
-    </form>
-
 
 </div>
 
