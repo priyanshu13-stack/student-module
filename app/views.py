@@ -10,7 +10,8 @@ import xlwt
 import csv
 import json
 from django.db import IntegrityError
-from .forms import sampleform,enrollform
+from .forms import sampleform
+import pandas as pd 
 
 def upload(request):
     smp = sample.objects.all()
@@ -95,21 +96,68 @@ def upload(request):
 
 def upload_enroll(request):
     if request.method == "POST":
-        form = enrollform(request.POST, request.FILES)
-        if form.is_valid():
-            upload_file = request.FILES['file']
-            if upload_file.name.endswith('.xlsx') or upload_file.name.endswith('.xls'):
-                data = Dataset().load(upload_file.read() , format= 'xlsx')
-                for i in data:
-                    sample.objects.filter(appno = i[1]).update(enrollmentno = i[2])  
+        upload_file = request.FILES
+        uf = upload_file['efile']
 
-                return redirect("app:filter")
-            else:
-                form.add_error('file', 'File format not supported')
+        if uf.name.endswith('.xlsx') or uf.name.endswith('.xls'):
+            uploaded = Dataset().load(uf.read(),format='xlsx')
+            
+            # x = pd.read_excel()
+            # for i in x : 
+
+            # print (uploaded)
+
+            for i in uploaded:
+                s = sample.objects.get(appno = i[2])
+                s.enrollmentno = i[1]
+                s.save()
+
+            return redirect("app:filter")
+
     else:
-        form = enrollform()
+        return render(request,"app/home.html")
     
-    return render(request, "app/upload.html", {'form' : form})
+
+
+def show_enroll(request):
+    return render(request, "app/upload_enroll.html")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    # if request.method == "POST":
+    #     form = enrollform(request.POST, request.FILES)
+    #     new_file = request.FILES['file']
+    #     if form.is_valid():
+    #         upload_file = request.FILES['file']
+    #         if upload_file.name.endswith('.xlsx') or upload_file.name.endswith('.xls'):
+    #             data = Dataset().load(upload_file.read() , format= 'xlsx')
+    #             for i in data:
+    #                 sample.objects.filter(appno = i[1]).update(enrollmentno = i[2])  
+
+    #             return redirect("app:filter")
+    #         else:
+    #             form.add_error('file', 'File format not supported')
+    # else:
+    #     form = enrollform()
+    
+    # return render(request, "app/upload.html", {'form' : form})
                     
 
 def home(request):

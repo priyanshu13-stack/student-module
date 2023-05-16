@@ -26,4 +26,5 @@ urlpatterns = [
     path(r'^download/$', views.download, name = "download"),
     path('download_file', views.download_file, name="download_file"),
     path('upload_enroll', views.upload_enroll, name = "upload_enroll"),
+    path('show_enroll', views.show_enroll, name = "show_enroll"),
 ]

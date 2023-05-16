@@ -51,7 +51,7 @@
       <a class="navbar-brand" href="{% url 'app:filter' %}">Home</a>
       <a class="navbar-brand" href="{% url 'app:upload_new' %}">Upload</a>
       <a class="navbar-brand" href="{% url 'app:deleteall' %}">Delete all Records</a>
-      <a class="navbar-brand" href="{% url 'app:upload_enroll' %}">Upload Enrollment No</a>
+      <a class="navbar-brand" href="{% url 'app:show_enroll' %}">Upload Enrollment No</a>
       </div>
     </nav>
 
@@ -138,7 +138,7 @@
         <br><br><br>
         <input type="file" name="myfile" id = "myfile">
         <br><br>
-        <button type="submit" class="btn btn-success" onclick="uploadfile()">Upload File</button>
+        <button type="submit" class="btn btn-success">Upload File</button>
     </form>
     <br>
 

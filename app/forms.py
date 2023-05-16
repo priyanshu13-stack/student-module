@@ -34,7 +34,3 @@ class sampleform(forms.ModelForm):
             'aggregate': forms.TextInput(attrs={'class': 'form-control'}),
             'pcm': forms.TextInput(attrs={'class': 'form-control'}),
         }
-
-
-class enrollform(forms.Form):
-    file = forms.FileField()

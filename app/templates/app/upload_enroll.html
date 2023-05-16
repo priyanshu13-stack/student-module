@@ -5,9 +5,9 @@
             Upload File
         </div>
         <div class="card-body">
-            <form method="POST" enctype="multipart/form-data">
+            <form method="POST" enctype="multipart/form-data" action="{% url 'app:upload_enroll' %}">
                 {% csrf_token %}
-                {{ form.as_p }}
+                <input type="file" name="efile" id="efile"/>
                 <button type="submit" class="btn btn-success">Upload File</button>
             </form>
             {% if form.errors %}
