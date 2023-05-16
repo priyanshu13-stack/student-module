@@ -11,37 +11,154 @@ import csv
 import json
 from django.db import IntegrityError
 from .forms import sampleform
+import pandas as pd 
 
 def upload(request):
     smp = sample.objects.all()
-    if (request.method == "POST"):
-        try:
+    if (request.method == "POST" and request.FILES['myfile']):
             sample_resource = sampleResource()
-            dataset = Dataset()
             new_file = request.FILES['myfile']
 
-            if not new_file.name.endswith('xlsx'):
-                messages.info(request, 'File format not supported')
-                return render(request, 'app/upload.html')
+            if new_file.name.endswith('.xlsx') or new_file.name.endswith('.xls'):
+                dataset = Dataset()
 
-            imported_data = dataset.load(new_file.read(),format='xlsx')
-            for i in imported_data:
-                value = sample(
-                    i[0],i[1],i[2],i[3],i[4],i[5],i[6],i[7],i[8],i[9],i[10],i[11],i[12],i[13],i[14],i[15],i[16],
-                    i[17],i[18],i[19],i[20],i[21],i[22],i[23],i[24],
-                )
-                value.save()
-            return redirect('app:filter')
-        except MultiValueDictKeyError:
-            return redirect('app:upload')
-        except IntegrityError as e :
-            return HttpResponseBadRequest("Data already exists. Try uploading another file!")
+                imported_data = dataset.load(new_file.read(),format='xlsx')
+                for i in imported_data:
+                    id = i[0]
+                    type = i[1]
+                    admitted = i[2]
+                    enrollmentno = i[3]
+                    name = i[4]
+                    management= i[5]
+                    yearofadmission= i[6]
+                    appno= i[7]
+                    Fname= i[8]
+                    Mname= i[9]
+                    stream= i[10]
+                    DOB= i[11]
+                    gender= i[12]
+                    category = i[13]
+                    subcategory= i[14]
+                    region= i[15]
+                    rank= i[16]
+                    allottedquota = i[17]
+                    allottedcategory= i[18]
+                    studentmobile= i[19]
+                    emailid= i[20]
+                    fathermobile= i[21]
+                    address= i[22]
+                    aggregate= i[23]
+                    pcm = i[24]
 
+                    try:
+                        # if unique values exist in the database or not
+                        existing_record = sample.objects.get(enrollmentno = enrollmentno, appno = appno)
+                    
+                    except sample.DoesNotExist:
+                        sample.objects.create(id = id, type = type , admitted = admitted, enrollmentno = enrollmentno, name = name, management = management, yearofadmission = yearofadmission, appno = appno, Fname = Fname, Mname = Mname, stream = stream, DOB = DOB, gender = gender, category = category, subcategory = subcategory, region = region, rank = rank, allottedquota = allottedquota, allottedcategory = allottedcategory, studentmobile = studentmobile, emailid = emailid, fathermobile = fathermobile, address = address, aggregate = aggregate, pcm = pcm)
+
+                    else:
+                        if existing_record.id != id or existing_record.type != type or existing_record.admitted != admitted or existing_record.name != name or existing_record.management != management or existing_record.yearofadmission !=yearofadmission or existing_record.Fname != Fname or existing_record.Mname != Mname or existing_record.stream != stream or existing_record.DOB != DOB or existing_record.gender != gender or existing_record.category != category or existing_record.subcategory != subcategory or existing_record.region != region or existing_record.rank != rank or existing_record.allottedquota != allottedquota or existing_record.allottedcategory != allottedcategory or existing_record.studentmobile != studentmobile or existing_record.emailid != emailid or existing_record.fathermobile != fathermobile or existing_record.address!= address or existing_record.aggregate!= aggregate or existing_record.pcm!= pcm :
+
+                            existing_record.id = id
+                            existing_record.type = type
+                            existing_record.admitted = admitted
+                            existing_record.enrollmentno = enrollmentno
+                            existing_record.name = name
+                            existing_record.management = management
+                            existing_record.yearofadmission =yearofadmission
+                            existing_record.appno = appno
+                            existing_record.Fname = Fname
+                            existing_record.Mname = Mname
+                            existing_record.stream = stream
+                            existing_record.DOB = DOB
+                            existing_record.gender = gender
+                            existing_record.category = category
+                            existing_record.subcategory = subcategory
+                            existing_record.region = region
+                            existing_record.rank = rank
+                            existing_record.allottedquota = allottedquota
+                            existing_record.allottedcategory = allottedcategory
+                            existing_record.studentmobile = studentmobile
+                            existing_record.emailid = emailid
+                            existing_record.fathermobile = fathermobile
+                            existing_record.address= address
+                            existing_record.aggregate= aggregate
+                            existing_record.pcm= pcm
+                            try:
+                                existing_record.save()
+                            except IntegrityError as e:
+                                pass
+                return redirect('app:filter')
+    else:
+        return render(request, "app/upload.html")
+            
+
+def upload_enroll(request):
+    if request.method == "POST":
+        upload_file = request.FILES
+        uf = upload_file['efile']
+
+        if uf.name.endswith('.xlsx') or uf.name.endswith('.xls'):
+            uploaded = Dataset().load(uf.read(),format='xlsx')
+            
+            # x = pd.read_excel()
+            # for i in x : 
+
+            # print (uploaded)
+
+            for i in uploaded:
+                s = sample.objects.get(appno = i[2])
+                s.enrollmentno = i[1]
+                s.save()
+
+            return redirect("app:filter")
+
+    else:
+        return render(request,"app/home.html")
     
-    context = {
-        "smp" : smp,
-    }
-    return render(request, "app/upload.html", context)
+
+
+def show_enroll(request):
+    return render(request, "app/upload_enroll.html")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    # if request.method == "POST":
+    #     form = enrollform(request.POST, request.FILES)
+    #     new_file = request.FILES['file']
+    #     if form.is_valid():
+    #         upload_file = request.FILES['file']
+    #         if upload_file.name.endswith('.xlsx') or upload_file.name.endswith('.xls'):
+    #             data = Dataset().load(upload_file.read() , format= 'xlsx')
+    #             for i in data:
+    #                 sample.objects.filter(appno = i[1]).update(enrollmentno = i[2])  
+
+    #             return redirect("app:filter")
+    #         else:
+    #             form.add_error('file', 'File format not supported')
+    # else:
+    #     form = enrollform()
+    
+    # return render(request, "app/upload.html", {'form' : form})
+                    
 
 def home(request):
     smp = sample.objects.all()
@@ -141,10 +258,10 @@ def filter(request):
                     smp = smp.filter(type = 'LE')
                 
                 elif (ty == 'Management Student'):
-                    smp = smp.filter(management = True)
+                    smp = smp.filter(management = 'YES')
 
                 elif (ty == 'Non-Management Student'):
-                    smp = smp.filter(management = False)
+                    smp = smp.filter(management = 'NO')
 
             if is_valid_query(alq):
                 if (alq == 'HS'):
@@ -481,6 +598,8 @@ def delete_all(request):
 def upload_new(request):
     return redirect('app:upload')
 
+def upload_enr(request):
+    return render(request, "app/uploadenr.html")
 
 def validation1(self):
     if (self == True):

@@ -39,6 +39,7 @@
   <a class="navbar-brand" href="{% url 'app:filter' %}">Home</a>
   <a class="navbar-brand" href="{% url 'app:upload_new' %}">Upload</a>
   <a class="navbar-brand" href="{% url 'app:deleteall' %}">Delete all Records</a>
+  <a class="navbar-brand" href="{% url 'app:show_enroll' %}">Upload Enrollment No</a>
   </div>
 </nav>
     
@@ -146,6 +147,28 @@
                       </div>
 
                       <div class="form-group col-md-6">
+                        <label for="inputState">Allotted Category</label>
+                        <select id="ac" class="form-control" name="ac" onchange="savedata(this)">
+                          <option disabled>Choose Allotted Category</option>
+                          <option selected>All</option>
+                          <option>OPNO</option>
+                          <option>SCNO</option>
+                          <option>NODF</option>
+                        </select>
+                      </div>
+
+                      <div class="form-group col-md-6">
+                        <label for="inputState">Allotted Quota</label>
+                        <select id="aq" class="form-control" name="aq" onchange="savedata(this)">
+                          <option disabled>Choose Alloted Quota</option>
+                          <option selected>All</option>
+                          <option>HS</option>
+                          <option>OS</option>
+                          <option>AI</option>
+                        </select>
+                      </div>
+
+                      <div class="form-group col-md-6">
                         <label for="inputState">Gender</label>
                         <select id="gender_f" class="form-control" name="gender" onchange="savedata(this)">
                           <option disabled>Choose Gender</option>
@@ -192,27 +215,7 @@
                         </select>
                       </div>
 
-                      <div class="form-group col-md-6">
-                        <label for="inputState">Allotted Quota</label>
-                        <select id="aq" class="form-control" name="aq" onchange="savedata(this)">
-                          <option disabled>Choose Alloted Quota</option>
-                          <option selected>All</option>
-                          <option>HS</option>
-                          <option>OS</option>
-                          <option>AI</option>
-                        </select>
-                      </div>
-
-                      <div class="form-group col-md-6">
-                        <label for="inputState">Allotted Category</label>
-                        <select id="ac" class="form-control" name="ac" onchange="savedata(this)">
-                          <option disabled>Choose Allotted Category</option>
-                          <option selected>All</option>
-                          <option>OPNO</option>
-                          <option>SCNO</option>
-                          <option>NODF</option>
-                        </select>
-                      </div>
+                      
 
                       <button type="submit" class="btn btn-primary btn-primary active" style="text-align: center;">Show Data</button>
                       <button onclick="download()" id="downbutton" class="btn btn-primary active" style="position:relative; left: 1%;">Download File</button>
