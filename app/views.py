@@ -11,7 +11,7 @@ import csv
 import json
 from django.db import IntegrityError
 from .forms import sampleform
-import pandas as pd 
+# import pandas as pd 
 
 def upload(request):
     smp = sample.objects.all()
@@ -101,7 +101,7 @@ def upload_enroll(request):
 
         if uf.name.endswith('.xlsx') or uf.name.endswith('.xls'):
             uploaded = Dataset().load(uf.read(),format='xlsx')
-            
+
             # x = pd.read_excel()
             # for i in x : 
 
