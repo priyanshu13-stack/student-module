@@ -11,48 +11,56 @@ import csv
 import json
 from django.db import IntegrityError
 from .forms import sampleform
-# import pandas as pd 
+from django.http import QueryDict
+import pandas as pd 
 
 def upload(request):
     smp = sample.objects.all()
     if (request.method == "POST" and request.FILES['myfile']):
-            sample_resource = sampleResource()
             new_file = request.FILES['myfile']
 
             if new_file.name.endswith('.xlsx') or new_file.name.endswith('.xls'):
-                dataset = Dataset()
+                df = pd.read_excel(new_file)
+                # dataset = Dataset()
+                df = df['EnrollmentNo'].isnull()
+                # if (df):
 
-                imported_data = dataset.load(new_file.read(),format='xlsx')
-                for i in imported_data:
-                    id = i[0]
-                    type = i[1]
-                    admitted = i[2]
-                    enrollmentno = i[3]
-                    name = i[4]
-                    management= i[5]
-                    yearofadmission= i[6]
-                    appno= i[7]
-                    Fname= i[8]
-                    Mname= i[9]
-                    stream= i[10]
-                    DOB= i[11]
-                    gender= i[12]
-                    category = i[13]
-                    subcategory= i[14]
-                    region= i[15]
-                    rank= i[16]
-                    allottedquota = i[17]
-                    allottedcategory= i[18]
-                    studentmobile= i[19]
-                    emailid= i[20]
-                    fathermobile= i[21]
-                    address= i[22]
-                    aggregate= i[23]
-                    pcm = i[24]
+                # imported_data = dataset.load(new_file.read(),format='xlsx')
+
+                for _, row in df.iterrows():
+                    id = row['id']
+                    type = row['Type']
+                    admitted = row['Admitted']
+                    enrollmentno = row['EnrollmentNo']
+                    name = row['Name']
+                    management= row['Management']
+                    yearofadmission= row['YearofAdmission']
+                    appno= row['AppNo']
+                    Fname= row['Fname']
+                    Mname= row['Mname']
+                    stream= row['Stream']
+                    DOB= row['DOB']
+                    gender= row['Gender']
+                    category = row['Category']
+                    subcategory= row['Subcategory']
+                    region= row['Region']
+                    rank= row['Rank']
+                    allottedquota = row['AllottedQuota']
+                    allottedcategory= row['AllottedCategory']
+                    studentmobile= row['StudentMobile']
+                    emailid= row['EmailID']
+                    fathermobile= row['FatherMobile']
+                    address= row['Address']
+                    aggregate= row['Aggregate']
+                    pcm = row['PCM']
 
                     try:
                         # if unique values exist in the database or not
                         existing_record = sample.objects.get(enrollmentno = enrollmentno, appno = appno)
+
+                    except IntegrityError:
+                        x = "Multiple value found for a single enrollment number"
+                        return HttpResponseBadRequest(x)
                     
                     except sample.DoesNotExist:
                         sample.objects.create(id = id, type = type , admitted = admitted, enrollmentno = enrollmentno, name = name, management = management, yearofadmission = yearofadmission, appno = appno, Fname = Fname, Mname = Mname, stream = stream, DOB = DOB, gender = gender, category = category, subcategory = subcategory, region = region, rank = rank, allottedquota = allottedquota, allottedcategory = allottedcategory, studentmobile = studentmobile, emailid = emailid, fathermobile = fathermobile, address = address, aggregate = aggregate, pcm = pcm)
@@ -95,25 +103,25 @@ def upload(request):
             
 
 def upload_enroll(request):
+    smp = sample.objects.all()
     if request.method == "POST":
         upload_file = request.FILES
         uf = upload_file['efile']
-
+        ind = 0 
         if uf.name.endswith('.xlsx') or uf.name.endswith('.xls'):
-            uploaded = Dataset().load(uf.read(),format='xlsx')
+            dnew = pd.read_excel(uf)
+            # uploaded = Dataset().load(uf.read(),format='xlsx')
 
-            # x = pd.read_excel()
-            # for i in x : 
-
-            # print (uploaded)
-
-            for i in uploaded:
-                s = sample.objects.get(appno = i[2])
-                s.enrollmentno = i[1]
+            for _, row in dnew.iterrows():
+                s = sample.objects.get(appno = row['AppNo'])
+                s.enrollmentno = row['EnrollmentNo']
                 s.save()
-
-            return redirect("app:filter")
-
+                ind+=1
+            context = {
+                "ind" : ind,
+                "smp" : smp,
+            }
+            return render(request, "app/home.html", context)
     else:
         return render(request,"app/home.html")
     
@@ -160,13 +168,7 @@ def show_enroll(request):
     # return render(request, "app/upload.html", {'form' : form})
                     
 
-def home(request):
-    smp = sample.objects.all()
-    context = {
-        "smp" : smp,
-    }
-    
-    return render(request, 'app/home.html', context)
+
 
 
 def is_valid_query(param):
@@ -187,6 +189,7 @@ def filter(request):
             ty = request.POST.get('type')
             alq = request.POST.get('aq')
             alc = request.POST.get('ac')
+            yod = request.POST.get('yearofad')
 
             if is_valid_query(srt):
                 if (srt == 'Increasing Order'):
@@ -283,11 +286,34 @@ def filter(request):
                 elif (alc == 'NODF'):
                     smp = smp.filter(allottedcategory = "NODF")
 
+            if is_valid_query(yod):
+                if (yod == '2020'):
+                    smp = smp.filter(yearofadmission = "2020")
+                
+                elif (yod == '2021'):
+                    smp = smp.filter(yearofadmission = "2021")
+                
+                elif (yod == '2022'):
+                    smp = smp.filter(yearofadmission = "2022")
+
+                elif (yod == '2023'):
+                    smp = smp.filter(yearofadmission = "2023")
+
     context = {
         "smp" : smp    
     }
     
     return render(request, "app/home.html", context)  
+
+
+
+def home(request):
+    smp = sample.objects.all()
+    context = {
+        "smp" : smp,
+    }
+    
+    return render(request, 'app/home.html', context)
 
 
 
@@ -408,7 +434,7 @@ def download_file(request):
     ind = 1
 
     for i in smp:
-        writer.writerow([ind, i.type, validation1(i.admitted), i.enrollmentno, i.name,validation1(i.management),i.yearofadmission.strftime('%Y'),i.appno,i.Fname,i.Mname,i.stream,i.DOB.strftime('%d-%m-%Y'),i.gender,i.category,i.subcategory,i.region,i.rank,i.allottedquota,i.allottedcategory,i.studentmobile,i.emailid,i.fathermobile,i.address,i.aggregate,i.pcm])
+        writer.writerow([ind, i.type, validation1(i.admitted), i.enrollmentno, i.name,validation1(i.management),i.yearofadmission,i.appno,i.Fname,i.Mname,i.stream,i.DOB.strftime('%d-%m-%Y'),i.gender,i.category,i.subcategory,i.region,i.rank,i.allottedquota,i.allottedcategory,i.studentmobile,i.emailid,i.fathermobile,i.address,i.aggregate,i.pcm])
 
         ind+=1
 

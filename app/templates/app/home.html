@@ -215,10 +215,23 @@
                         </select>
                       </div>
 
-                      
-
-                      <button type="submit" class="btn btn-primary btn-primary active" style="text-align: center;">Show Data</button>
-                      <button onclick="download()" id="downbutton" class="btn btn-primary active" style="position:relative; left: 1%;">Download File</button>
+                      <div class="form-group col-md-6">
+                        <label for="inputState">Year of Admission</label>
+                        <select id="yearofad" class="form-control" name="yearofad" onchange="savedata(this)">
+                          <option disabled>Choose Year of Admission</option>
+                          <option selected>All</option>
+                          <option>2020</option>
+                          <option>2021</option>
+                          <option>2022</option>
+                          <option>2023</option>
+                        </select>
+                      </div>
+                      <br>
+                      <div>
+                        <br>
+                        <button type="submit" class="btn btn-primary btn-primary active" style="text-align: center;">Show Data</button>
+                        <button onclick="download()" id="downbutton" class="btn btn-primary active" style="position:relative; left: 1%;">Download File</button>
+                      </div>
                       
                   <br>
             </form>
@@ -247,15 +260,20 @@
         <br>
         <h4 style="text-align: center; ">Data Retrieved</h4>
         <br>
+        {% if ind %}
+          <p>No. of Columns Updated: {{ ind }}</p>
+        {% else %}
+          <p></p>
+        {% endif %}
         <table border="1" style="border:2px solid black;margin-left:auto;margin-right:auto;">
             <thead>
                 <th>SNo.</th>
+                <th>Year of Admission</th>
                 <th>Type</th>
                 <th>Admitted</th>
                 <th>Enrollment Number</th>
                 <th>Name</th>
                 <th>Management</th>
-                <th>Year of Admission</th>
                 <th>IP Application Number</th>
                 <th>Father Name</th>
                 <th>Mother Name</th>
@@ -282,12 +300,12 @@
                 <td class="number">
 
                 </td>
+                <td>{{k.yearofadmission}}</td>
                 <td>{{k.type}}</td>
                 <td>{{k.admitted_yn}}</td>
                 <td>{{k.enrollmentno}}</td>
                 <td>{{k.name}}</td>
                 <td>{{k.management_yn}}</td>
-                <td>{{k.yearpub}}</td>
                 <td>{{k.appno}}</td>
                 <td>{{k.Fname}}</td>
                 <td>{{k.Mname}}</td>
@@ -338,13 +356,8 @@
               document.getElementById("data").setAttribute("action" , "{% url 'app:download_file' %}");
               document.getElementById("data").submit();
               location.reload(true);
-
-              // document.getElementById("data").setAttribute("action" , "{% url  'app:filter' %}");
-              // alert(document.getElementById("data").getAttribute("action"));
-
-            // var my = document.getElementById("data");
-
         };
+
         </script>
   </body>
 <br><br>

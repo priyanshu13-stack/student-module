@@ -68,10 +68,10 @@ managementchoices = (
 class sample(models.Model):
     type = models.CharField(max_length=10, choices= typechoices ,default='Regular')
     admitted = models.CharField(max_length=50, default= '',null= True, choices= admittedchoices)
-    enrollmentno = models.IntegerField(null = True, default = None , blank=True, unique = True)
+    enrollmentno = models.IntegerField(null = True, default = "" , blank=True, unique = True)
     name = models.CharField(max_length=100, default=False)
     management = models.CharField(max_length=50, default = '', null= True, choices= managementchoices)
-    yearofadmission = models.DateTimeField(default=False)
+    yearofadmission = models.IntegerField(null = True, default=None , blank=True)
     appno = models.CharField(default= "", max_length=200, unique= True)
     Fname = models.CharField(max_length=200, default=False)
     Mname = models.CharField(max_length=200, default=False)
@@ -93,8 +93,9 @@ class sample(models.Model):
 
     def __str__(self):
         return self.name
-    def yearpub(self):
-        return self.yearofadmission.strftime('%Y')
+    
+    # def yearpub(self):
+    #     return self.yearofadmission.strftime('%Y')
 
     def dateofbirth(self):
         return self.DOB.strftime('%d-%m-%Y')
