@@ -22,9 +22,6 @@ def upload(request):
             if new_file.name.endswith('.xlsx') or new_file.name.endswith('.xls'):
                 df = pd.read_excel(new_file)
                 # dataset = Dataset()
-                df = df['EnrollmentNo'].isnull()
-                # if (df):
-
                 # imported_data = dataset.load(new_file.read(),format='xlsx')
 
                 for _, row in df.iterrows():
